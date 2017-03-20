@@ -1,21 +1,18 @@
-dovnar.alexander.oracle-java for Ansible Galaxy
-============
+Role Name
+=========
 
-## Summary
-
-Role name in Ansible Galaxy: **[dovnar.alexander.oracle-java](https://galaxy.ansible.com/)**
+Role name in Ansible Galaxy: **[dovnar.alexander.oracle-java](https://galaxy.ansible.com/dovnar.alexander.oracle-java)**
 
 You can use this role to install JDK 7 or 8 version.
 This role could be used on any distributive with YUM or APT package manager.
 
-## Role Variables
-
+Role Variables
+--------------
 ### Mandatory variables
 
 None.
 
 ### Optional variables
-
 
 There are the following variables by default:
 
@@ -42,13 +39,12 @@ javaClearAfter: true
 javaSetHome: true
 ```
 
-## Usage
-
+Example Playbook
+----------------
 
 ### Step 1: add role
 
 Add role name `dovnar.alexander.oracle-java` to your playbook file.
-
 
 ### Step 2: add variables
 
@@ -70,6 +66,22 @@ Simple example:
     javaMinorVersion: 112
 ```
 
-## History
+### Step 3: add jdk role in your inventory file
 
-3/20/2017 init commit
+```ini
+---
+# file:inventory.ini
+
+[jdk]
+your_host
+```
+
+License
+-------
+
+BSD
+
+Author Information
+------------------
+Aliaksandr Dounar
+Systems Engineer in big IT company.

@@ -1,9 +1,0 @@
----
-# file: plays/jdk.yml
-
--   name: Playbook for install Oracle Java Developers Kit
-    hosts: jdk
-    become: yes
-
-    roles:
-      - { role: oracle-java, tags: ["jdk"] }
