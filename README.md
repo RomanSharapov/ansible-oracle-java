@@ -83,5 +83,6 @@ BSD
 
 Author Information
 ------------------
-Aliaksandr Dounar
-Systems Engineer in big IT company.
+Hello! My name is Aliaksandr Dounar.
+I'm a Systems Engineer.
+I like Configuration management  and automatization in common.
