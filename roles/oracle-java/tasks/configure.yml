@@ -1,0 +1,21 @@
+---
+# file: roles/oracle-java/tasks/configure.yml
+
+-   name: ensure that java installed via alternatives
+    alternatives:
+      name: java
+      link: /usr/bin/java
+      path: '{{ jdkHome }}/bin/java'
+        
+-   name: ensure that correct java version is selected
+    alternatives:
+      name: java
+      path: '{{ jdkHome }}/bin/java'
+
+-   name: Set JAVA_HOME
+    lineinfile: 
+      dest: /etc/environment 
+      state: present
+      regexp: '^JAVA_HOME'
+      line: "JAVA_HOME={{ jdkHome }}/bin"
+    when: javaSetHome and not jdkCheck.jdkHomeFound

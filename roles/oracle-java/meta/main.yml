@@ -1,0 +1,29 @@
+---
+# file: roles/oracle-java/meta/main.yml
+
+galaxy_info:
+    author: DovnarAlexander
+    description: Oracle JDK 7/8 for CentOS/Ubuntu
+    license: Apache
+
+    min_ansible_version: 2.0.0
+
+    platforms:
+        - name: Ubuntu
+          versions:
+              - precise
+              - trusty
+              - xenial
+        - name: EL
+          versions:
+              - 6
+              - 7
+
+    galaxy_tags:
+        - development
+        - system
+        - java
+        - jdk
+        - jvm
+
+dependencies: []

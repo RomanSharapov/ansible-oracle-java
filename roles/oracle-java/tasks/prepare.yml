@@ -1,0 +1,40 @@
+---
+# file: roles/oracle-java/tasks/prepare.yml
+
+-   name: check if java with this version is already installed
+    include: check-java.yml
+
+- block:
+
+  -   name: ensure that all required packages are installed
+      yum: 
+        name: '{{ item }}'
+        state: latest
+        update_cache: yes
+      with_items:
+        - tar
+        - libselinux-python
+      when: ansible_distribution == 'CentOS'
+
+  -   name: ensure that required packages are installed
+      apt: 
+        name: '{{ item }}'
+        state: latest
+      with_items:
+        - tar
+      when: ansible_distribution == 'Ubuntu'
+
+  -   name: prepare path for downloaded archive
+      file:
+        path: "{{ javaDownloadPath }}"
+        state: directory
+
+  -   name: prepare home path for JDK
+      file:
+        path: "{{ javaPath }}"
+        owner: root
+        group: root
+        mode: 0755
+        state: directory
+
+  when: not jdkCheck.jdkVersionFound

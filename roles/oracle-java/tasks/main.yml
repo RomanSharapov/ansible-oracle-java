@@ -1,0 +1,19 @@
+---
+# file: roles/oracle-java/tasks/main.yml
+
+# Include task to check all required variables
+-   include: check-vars.yml
+
+# Set all required variables for tasks
+-   include: set-facts.yml
+
+# Prepare instance
+-   include: prepare.yml
+
+# Install JDK
+-   include: install.yml
+    when: not jdkCheck.jdkVersionFound
+
+# Configure JDK
+-   include: configure.yml
+    when: not jdkCheck.jdkHomeFound or javaSetHome

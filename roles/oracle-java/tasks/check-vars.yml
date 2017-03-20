@@ -1,0 +1,26 @@
+---
+# file: roles/oracle-java/tasks/check-vars.yml
+
+-   name: check javaMajorVersion variable
+    fail: msg="Specify javaMajorVersion variable, please."
+    when: javaMajorVersion is not defined
+
+-   name: check javaMinorVersion variable
+    fail: msg="Specify javaMinorVersion variable, please."
+    when: javaMinorVersion is not defined
+
+-   name: check javaDownloadPath variable
+    fail: msg="Specify javaDownloadPath variable, please."
+    when: javaDownloadPath is not defined
+
+-   name: check javaFromOracle variable
+    fail: msg="Specify javaFromOracle variable, please."
+    when: javaFromOracle is not defined
+
+-   name: check javaClearAfter variable
+    fail: msg="Specify javaClearAfter variable, please."
+    when: javaClearAfter is not defined
+
+-   name: check javaSetHome variable
+    fail: msg="Specify javaSetHome variable, please."
+    when: javaSetHome is not defined

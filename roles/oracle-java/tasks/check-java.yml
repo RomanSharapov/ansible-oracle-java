@@ -1,0 +1,17 @@
+---
+# file: roles/oracle-java/tasks/check-java.yml
+
+-   name: copy script on remote host
+    copy:
+      src: check-java-version.sh
+      dest: "{{ javaDownloadPath }}/check-java-version.sh"
+      mode: 0775
+
+-   name: run prepared script on the remote host
+    shell: "{{ javaDownloadPath }}/check-java-version.sh {{ jdkVersion }}"
+    register: shellResult
+    changed_when: false
+    failed_when: shellResult.rc > 0
+
+-   set_fact:
+      jdkCheck: "{{ shellResult.stdout|from_json }}"

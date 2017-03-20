@@ -1,0 +1,34 @@
+---
+# file: roles/oracle-java/tasks/install.yml
+
+-   name: download tar archive from oracle site
+    get_url:
+      url: "{{ jarTarURL }}"
+      headers: "Cookie:oraclelicense=accept-securebackup-cookie"
+      dest: "{{ javaDownloadPath }}/{{ jdkTarName }}"
+      force: no
+      validate_certs: no
+      timeout: 600
+    when: javaFromOracle
+
+-   name: copy tar archive from local
+    copy:
+      src: "{{ jdkTarName }}"
+      dest: "{{ javaDownloadPath }}/{{ jdkTarName }}"
+    when: not javaFromOracle
+
+-   name: unarchive tar archive with JDK
+    unarchive:
+      src: "{{ javaDownloadPath }}/{{ jdkTarName }}"
+      dest: "{{ javaPath }}"
+      copy: no
+      creates: '{{ jdkHome }}/{{ jdkVersion }}'
+
+-   name: remove downloaded file
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - "{{ javaDownloadPath }}/{{ jdkTarName }}"
+      - "{{ javaDownloadPath }}/check-java-version.sh"
+    when: javaClearAfter
