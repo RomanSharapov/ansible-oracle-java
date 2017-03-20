@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Role name in Ansible Galaxy: **[dovnar.alexander.oracle-java](https://galaxy.ansible.com/dovnar.alexander.oracle-java)**
+Role name in Ansible Galaxy: **[DovnarAlexander/oracle-java](https://galaxy.ansible.com/DovnarAlexander/oracle-java)**
 
 You can use this role to install JDK 7 or 8 version.
 This role could be used on any distributive with YUM or APT package manager.
@@ -44,7 +44,7 @@ Example Playbook
 
 ### Step 1: add role
 
-Add role name `dovnar.alexander.oracle-java` to your playbook file.
+Add role name `DovnarAlexander.oracle-java` to your playbook file.
 
 ### Step 2: add variables
 
@@ -59,7 +59,7 @@ Simple example:
 - hosts: all
 
   roles:
-    - dovnar.alexander.oracle-java
+    - DovnarAlexander.oracle-java
 
   vars:
     javaMajorVersion: 8
