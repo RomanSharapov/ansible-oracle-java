@@ -70,13 +70,6 @@ Simple example:
     javaMinorVersion: 112
 ```
 
-## Dependencies
-
-
-## License
-
-Licensed under the Apache License V2.0. See the [LICENSE file](LICENSE) for details.
-
-
 ## History
 
+3/20/2017 init commit
