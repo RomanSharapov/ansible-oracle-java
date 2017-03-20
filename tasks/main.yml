@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/tasks/main.yml
+# file: tasks/main.yml
 
 # Include task to check all required variables
 -   include: check-vars.yml

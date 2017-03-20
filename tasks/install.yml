@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/tasks/install.yml
+# file: tasks/install.yml
 
 -   name: download tar archive from oracle site
     get_url:

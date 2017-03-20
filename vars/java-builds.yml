@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/vars/java-builds.yml
+# file: vars/java-builds.yml
 
 javaBuilds:
   8:

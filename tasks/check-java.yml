@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/tasks/check-java.yml
+# file: tasks/check-java.yml
 
 -   name: copy script on remote host
     copy:

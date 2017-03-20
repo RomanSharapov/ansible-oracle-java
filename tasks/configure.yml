@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/tasks/configure.yml
+# file: tasks/configure.yml
 
 -   name: ensure that java installed via alternatives
     alternatives:

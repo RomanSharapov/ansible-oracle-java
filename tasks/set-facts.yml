@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/tasks/set-facts.yml
+# file: tasks/set-facts.yml
 
 -   set_fact:
       jdkVersion: "1.{{ javaMajorVersion }}.0_{{ javaMinorVersion }}"

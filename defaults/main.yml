@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/defaults/main.yml
+# file: defaults/main.yml
 
 # Java major version 7 or 8
 javaMajorVersion: 8
@@ -13,7 +13,7 @@ javaPath: /opt/java/
 javaDownloadPath: /tmp
 # True if you want to use oracle web site to download archive
 # False if you have already had downloaded tar archive:
-# Just put this file in folder under roles/oracle-java/files folder
+# Just put this file in folder under files folder
 # Name should be in format jdk-<major_version>u<minor_version>-linux-x<64_or_86>.tar.gz
 javaFromOracle: true
 # True if you want to clear download files from javaDownloadPath folder

@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/meta/main.yml
+# file: meta/main.yml
 
 galaxy_info:
     author: DovnarAlexander

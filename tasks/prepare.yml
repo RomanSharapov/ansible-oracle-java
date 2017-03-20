@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/tasks/prepare.yml
+# file: tasks/prepare.yml
 
 -   name: check if java with this version is already installed
     include: check-java.yml

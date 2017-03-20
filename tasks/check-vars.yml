@@ -1,5 +1,5 @@
 ---
-# file: roles/oracle-java/tasks/check-vars.yml
+# file: tasks/check-vars.yml
 
 -   name: check javaMajorVersion variable
     fail: msg="Specify javaMajorVersion variable, please."
