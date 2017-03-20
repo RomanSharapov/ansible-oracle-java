@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - dovnar.alexander.oracle-java
+    - DovnarAlexander.oracle-java
