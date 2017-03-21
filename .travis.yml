@@ -32,7 +32,7 @@ script:
     && (echo 'Common test passed' && exit 0)
     || (echo 'Common test failed' && exit 1)
 
-  # Make sure GitLab is running.
+  # Make sure java version is valid
   - >
     java -version 2>&1 
     | grep "$JAVA"
