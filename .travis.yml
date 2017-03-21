@@ -2,8 +2,11 @@
 language: python
 python: "2.7"
 
+env:
+  - SITE=test.yml
+  - JAVA=1.8.0_121
+
 before_install:
-  # Make sure everything's up to date.
   - sudo apt-get update -qq
 
 install:
@@ -11,10 +14,28 @@ install:
   - pip install ansible
 
   # Add ansible.cfg to pick up roles path.
-  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
 script:
   # Check the role/playbook's syntax.
-  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+  - "ansible-playbook -i tests/test.ini tests/$SITE --syntax-check"
+
   # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo"
+  - "ansible-playbook -i tests/test.ini tests/$SITE --connection=local --sudo"
+
+  # Travis CI's environment requires one _extra_ run for true idempotence :-/.
+  - "ansible-playbook -i tests/test.ini tests/$SITE --connection=local --sudo"
+
+  # Run the role/playbook again, checking to make sure it's idempotent.
+  - >
+    ansible-playbook -i tests/test.ini tests/$SITE --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Common test passed' && exit 0)
+    || (echo 'Common test failed' && exit 1)
+
+  # Make sure GitLab is running.
+  - >
+    java -version 2>&1 
+    | grep "$JAVA"
+    && (echo 'Functional test passed' && exit 0)
+    || (echo 'Functional test failed' && exit 1)
