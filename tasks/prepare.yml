@@ -32,9 +32,12 @@
   -   name: prepare home path for JDK
       file:
         path: "{{ javaPath }}"
-        owner: root
-        group: root
-        mode: 0755
+        recurse: yes
         state: directory
+
+  -   name: check permissions for home JDK path
+      file:
+        path: "{{ javaPath }}"
+        mode: 0755
 
   when: not jdkCheck.jdkVersionFound
