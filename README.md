@@ -33,7 +33,7 @@ javaDownloadPath: /tmp
 # Name should be in format jdk-<major_version>u<minor_version>-linux-x<64_or_86>.tar.gz
 javaFromOracle: true
 # True if you want to clear download files from javaDownloadPath folder
-javaClearAfter: true
+javaClearAfter: false
 
 # Do you want to set up JAVA_HOME global variable in Linux
 javaSetHome: true
@@ -75,14 +75,3 @@ Simple example:
 [jdk]
 your_host
 ```
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-Hello! My name is Aliaksandr Dounar.
-I'm a Systems Engineer.
-I like Configuration management  and automatization in common.
