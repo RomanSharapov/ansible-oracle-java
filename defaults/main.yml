@@ -7,7 +7,7 @@ javaMajorVersion: 8
 javaMinorVersion: 121
 
 # Parent path to install JDK
-javaPath: /opt/java/
+javaPath: /opt/java
 
 # Path to download archives with JDK
 javaDownloadPath: /tmp
