@@ -7,8 +7,6 @@ ENV JAVA "1.$JAVA_MAJOR.0_$JAVA_MINOR"
 ENV WORKDIR /tmp
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR ${WORKDIR}
-
 RUN yum -y update \
     && rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
     && yum install -y python-pip gcc libffi-devel python-devel openssl-devel git
@@ -22,7 +20,7 @@ RUN git clone git://github.com/ansible/ansible.git --recursive \
 RUN mkdir -p /etc/ansible/roles/${ROLE_NAME}
 
 ADD ../* ${WORKDIR}
-ADD ../../* /etc/ansible/roles/${ROLE_NAME}
+ADD ../../.. /etc/ansible/roles/${ROLE_NAME}
 ADD ../test.ini /etc/ansible/hosts
 
 # Syntax check
