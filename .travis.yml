@@ -7,7 +7,8 @@ services:
   - docker
 
 install:
-  - docker build  -f tests/docker/EL6 -t jdk:EL6
+  - ls tests/docker
+  - docker build -t jdk/EL6 -f tests/docker/EL6
 
 script:
   # Check the role/playbook's syntax.
