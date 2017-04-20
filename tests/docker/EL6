@@ -1,0 +1,47 @@
+FROM centos:6
+
+ENV JAVA_MAJOR 8
+ENV JAVA_MINOR 121
+ENV JAVA "1.$JAVA_MAJOR.0_$JAVA_MINOR"
+
+ENV WORKDIR /tmp
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR ${WORKDIR}
+
+RUN yum -y update \
+    && yum -y install python-pip \
+    && rm -rf /tmp/*
+
+RUN pip install ansible \
+    && pip install ansible-lint
+
+RUN mkdir -p /etc/ansible/roles/${ROLE_NAME}
+
+ADD ../* ${WORKDIR}
+ADD ../../* /etc/ansible/roles/${ROLE_NAME}
+ADD ../test.ini /etc/ansible/hosts
+
+# Syntax check
+RUN ansible-playbook $WORKDIR/test.yml --syntax-check
+# Lint check
+RUN ansible-lint $WORKDIR/test.yml
+
+# Run the playbook
+RUN ansible-playbook $WORKDIR/test.yml --connection=local --sudo
+# Idempotency check
+RUN ansible-playbook $WORKDIR/test.yml --connection=local --sudo\
+    | grep -q 'changed=0.*failed=0' \
+    && (echo 'Idempotence test: pass' && exit 0) \
+    || (echo 'Idempotence test: fail' && exit 1)
+
+# Java version check
+RUN java -version 2>&1 \
+    | grep "$JAVA" \
+    && (echo 'Functional test passed' && exit 0) \
+    || (echo 'Functional test failed' && exit 1)
+# JAVA_HOME variable check
+RUN echo $JAVA_HOME \
+    | grep "$JAVA" \
+    && (echo 'Functional test passed' && exit 0) \
+    || (echo 'Functional test failed' && exit 1)

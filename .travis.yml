@@ -1,40 +1,14 @@
 ---
 language: python
-python: "2.7"
+python: 
+  - 2.7
 
-env:
-  - JAVA=1.8.0_121
-
-before_install:
-  - sudo apt-get update -qq
+services:
+  - docker
 
 install:
-  # Install Ansible.
-  - pip install ansible
-
-  # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+  - docker build -t jdk:EL6 -f tests/docker/EL6
 
 script:
   # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/test.ini tests/test.yml --syntax-check"
-
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/test.ini tests/test.yml --connection=local --sudo"
-
-  # Travis CI's environment requires one _extra_ run for true idempotence :-/.
-  - "ansible-playbook -i tests/test.ini tests/test.yml --connection=local --sudo"
-
-  # Run the role/playbook again, checking to make sure it's idempotent.
-  - >
-    ansible-playbook -i tests/test.ini tests/test.yml --connection=local --sudo
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Common test passed' && exit 0)
-    || (echo 'Common test failed' && exit 1)
-
-  # Make sure java version is valid
-  - >
-    java -version 2>&1 
-    | grep "$JAVA"
-    && (echo 'Functional test passed' && exit 0)
-    || (echo 'Functional test failed' && exit 1)
+  - docker images | grep jdk:EL6
