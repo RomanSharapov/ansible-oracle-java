@@ -4,7 +4,7 @@
 # Java major version 7 or 8
 javaMajorVersion: 8
 # Java minor version
-javaMinorVersion: 121
+javaMinorVersion: 111
 
 # Parent path to install JDK
 javaPath: /opt/java

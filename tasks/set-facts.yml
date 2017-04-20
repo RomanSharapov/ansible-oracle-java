@@ -15,9 +15,9 @@
       jdkBuildNumber: "{{ javaBuilds[javaMajorVersion][javaMinorVersion]['build'] }}"
       jdkTarName: "jdk-{{ jdkName }}-linux-{{ jdkOSArch }}.tar.gz"
 
-# -   set_fact:
-#       jarTarLinkID: "{{ javaBuilds[javaMajorVersion][javaMinorVersion]['downloadId'] }}/"
-#     when: "javaBuilds[javaMajorVersion][javaMinorVersion]['downloadId'] is defined"
+-   set_fact:
+      jarTarLinkID: "{{ javaBuilds[javaMajorVersion][javaMinorVersion]['downloadId'] }}/"
+    when: "javaBuilds[javaMajorVersion][javaMinorVersion]['downloadId'] is defined"
 
-# -   set_fact:
-#       jarTarURL: "http://download.oracle.com/otn-pub/java/jdk/{{ jdkName }}-b{{ jdkBuildNumber }}/{{ jarTarLinkID }}{{ jdkTarName }}"
+-   set_fact:
+      jarTarURL: "http://download.oracle.com/otn-pub/java/jdk/{{ jdkName }}-b{{ jdkBuildNumber }}/{{ jarTarLinkID }}{{ jdkTarName }}"
