@@ -7,6 +7,6 @@ services:
   - docker
 
 script:
-  - ls tests/docker
-  - docker build -t jdk:EL6 -f tests/docker/EL6
+  - cd tests/docker
+  - docker build -t jdk:EL6 -f EL6
   - docker images | grep jdk:EL6a
