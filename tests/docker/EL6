@@ -8,15 +8,16 @@ RUN yum -y update \
     && rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
     && yum install -y python-pip gcc libffi-devel python-devel openssl-devel git
 
-RUN git clone git://github.com/ansible/ansible.git --recursive /tmp/ansible
+RUN git clone git://github.com/ansible/ansible.git --recursive /tmp/ansible \
+    && git clone https://github.com/willthames/ansible-lint /tmp/ansible-lint
 
 WORKDIR /tmp/ansible
 
 RUN pip install -r ./requirements.txt \
     && git submodule update --init --recursive
 
-ENV PATH /tmp/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin
-ENV PYTHONPATH /tmp/ansible/lib
+ENV PATH /tmp/ansible/bin:/tmp/ansible-lint/bin:/bin:/usr/bin:/sbin:/usr/sbin
+ENV PYTHONPATH /tmp/ansible/lib:/tmp/ansible-lint/lib
 ENV ANSIBLE_LIBRARY /tmp/ansible/library
 
 RUN mkdir -p roles
@@ -28,14 +29,14 @@ RUN git clone https://github.com/DovnarAlexander/ansible-oracle-java.git
 WORKDIR ansible-oracle-java/tests
 
 # Syntax check
-RUN ansible-playbook test.yml --syntax-check
+RUN ansible-playbook test.yml -i test.ini --syntax-check
 # Lint check
 RUN ansible-lint test.yml
 
 # Run the playbook
-RUN ansible-playbook test.yml --connection=local --sudo
+RUN ansible-playbook test.yml -i test.ini --connection=local --sudo
 # Idempotency check
-RUN ansible-playbook test.yml --connection=local --sudo\
+RUN ansible-playbook test.yml -i test.ini --connection=local --sudo\
     | grep -q 'changed=0.*failed=0' \
     && (echo 'Idempotence test: pass' && exit 0) \
     || (echo 'Idempotence test: fail' && exit 1)
