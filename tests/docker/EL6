@@ -70,7 +70,7 @@ ENV JAVA_MAJOR 7
 ENV JAVA_MINOR 79
 ENV JAVA "1.$JAVA_MAJOR.0_$JAVA_MINOR"
 
-RUN sed -ie 's/javaMajorVersion: 8/javaMinorVersion: 7/g' ../defaults/main.yml \
+RUN sed -ie 's/javaMajorVersion: 8/javaMajorVersion: 7/g' ../defaults/main.yml \
     && sed -ie 's/javaMinorVersion: 101/javaMinorVersion: 79/g' ../defaults/main.yml
 
 # Run the playbook
