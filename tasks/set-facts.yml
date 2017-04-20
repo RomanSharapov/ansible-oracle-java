@@ -11,8 +11,6 @@
 
 -   include_vars: java-builds.yml
 
--   debug: "msg={{ javaBuilds[javaMajorVersion][javaMinorVersion] }}"
-
 -   set_fact:
       jdkBuildNumber: "{{ javaBuilds[javaMajorVersion][javaMinorVersion]['build'] }}"
       jdkTarName: "jdk-{{ jdkName }}-linux-{{ jdkOSArch }}.tar.gz"
