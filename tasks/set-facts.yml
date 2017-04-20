@@ -4,7 +4,7 @@
 -   set_fact:
       jdkVersion: "1.{{ javaMajorVersion }}.0_{{ javaMinorVersion }}"
       jdkName: "{{ javaMajorVersion }}u{{ javaMinorVersion }}"
-      jdkOSArch: "{{ 'i586'  if ansible_architecture == 'i386' else 'x64' }}"
+      jdkOSArch: "{{ 'i586' if ansible_architecture == 'i386' else 'x64' }}"
 
 -   set_fact: 
       jdkHome: "{{ javaPath }}/jdk{{ jdkVersion }}"
@@ -18,7 +18,7 @@
 
 -   set_fact:
       jarTarLinkID: "{{ javaBuilds[javaMajorVersion][javaMinorVersion]['downloadId'] }}/"
-    when: javaBuilds[javaMajorVersion][javaMinorVersion]['downloadId'] is defined
+    when: "javaBuilds[javaMajorVersion][javaMinorVersion]['downloadId'] is defined"
 
 -   set_fact:
       jarTarURL: "http://download.oracle.com/otn-pub/java/jdk/{{ jdkName }}-b{{ jdkBuildNumber }}/{{ jarTarLinkID }}{{ jdkTarName }}"
