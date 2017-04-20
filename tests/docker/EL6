@@ -8,13 +8,20 @@ RUN yum -y update \
     && rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
     && yum install -y python-pip gcc libffi-devel python-devel openssl-devel git
 
-RUN git clone git://github.com/ansible/ansible.git --recursive \
-    && cd ansible \
-    && source ./hacking/env-setup -q \
-    && pip install -r ./requirements.txt \
+RUN git clone git://github.com/ansible/ansible.git --recursive /tmp/ansible
+
+WORKDIR /tmp/ansible
+
+RUN pip install -r ./requirements.txt \
     && git submodule update --init --recursive
 
-RUN mkdir -p /etc/ansible/roles/${ROLE_NAME}
+ENV PATH /tmp/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin
+ENV PYTHONPATH /tmp/ansible/lib
+ENV ANSIBLE_LIBRARY /tmp/ansible/library
+
+RUN mkdir -p roles
+
+WORKDIR roles
 
 RUN git clone https://github.com/DovnarAlexander/ansible-oracle-java.git
 
