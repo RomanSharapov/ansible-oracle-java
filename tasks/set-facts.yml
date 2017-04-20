@@ -12,7 +12,7 @@
 
 -   include_vars: java-builds.yml
 -   debug: "msg={{ javaBuilds }}"
--   debug: "msg={{ javaBuilds[javaMajorVersion] }}"
+-   debug: "msg={{ javaBuilds['8'] }}"
 -   debug: "msg={{ javaBuilds[javaMajorVersion][javaMinorVersion] }}"
 -   debug: "msg={{ javaBuilds[javaMajorVersion][javaMinorVersion]['build'] }}"
 
