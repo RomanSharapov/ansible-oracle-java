@@ -5,6 +5,7 @@
       jdkVersion: "1.{{ javaMajorVersion }}.0_{{ javaMinorVersion }}"
       jdkName: "{{ javaMajorVersion }}u{{ javaMinorVersion }}"
       jdkOSArch: "{{ 'i586' if ansible_architecture == 'i386' else 'x64' }}"
+      jarTarLinkID: ''
 
 -   set_fact: 
       jdkHome: "{{ javaPath }}/jdk{{ jdkVersion }}"
