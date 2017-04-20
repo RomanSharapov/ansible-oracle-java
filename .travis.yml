@@ -6,10 +6,7 @@ python:
 services:
   - docker
 
-install:
+script:
   - ls tests/docker
   - docker build -t jdk/EL6 -f tests/docker/EL6
-
-script:
-  # Check the role/playbook's syntax.
-  - docker images | grep jdk:EL6
+  - docker images | grep jdk:EL6a
