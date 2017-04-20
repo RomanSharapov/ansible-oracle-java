@@ -16,7 +16,7 @@ RUN git clone git://github.com/ansible/ansible.git --recursive \
 
 RUN mkdir -p /etc/ansible/roles/${ROLE_NAME}
 
-RUN git clone git@github.com:DovnarAlexander/ansible-oracle-java.git
+RUN git clone https://github.com/DovnarAlexander/ansible-oracle-java.git
 
 WORKDIR ansible-oracle-java/tests
 
