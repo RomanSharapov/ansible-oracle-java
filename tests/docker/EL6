@@ -11,11 +11,13 @@ WORKDIR ${WORKDIR}
 
 RUN yum -y update \
     && rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
-    && yum -y install gcc* python-pip \
-    && rm -rf /tmp/*
+    && yum -y python-pip git
 
-RUN pip install ansible \
-    && pip install ansible-lint
+RUN git clone git://github.com/ansible/ansible.git --recursive \
+    && cd ansible \
+    && source ./hacking/env-setup -q \
+    && pip install -r ./requirements.txt \
+    && git submodule update --init --recursive
 
 RUN mkdir -p /etc/ansible/roles/${ROLE_NAME}
 
