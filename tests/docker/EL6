@@ -50,9 +50,9 @@ ENV JAVA_MINOR 101
 ENV JAVA "1.$JAVA_MAJOR.0_$JAVA_MINOR"
 
 # Run the playbook
-RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=8 javaMinorVersion=101" --connection=local --sudo -v
+RUN ansible-playbook test.yml -i test.ini -e javaMajorVersion=8 -e javaMinorVersion=101 --connection=local --sudo -v
 # Idempotency check
-RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=8 javaMinorVersion=101" --connection=local --sudo \
+RUN ansible-playbook test.yml -i test.ini -e javaMajorVersion=8 -e javaMinorVersion=101 --connection=local --sudo \
     | grep -q 'changed=0.*failed=0' \
     && (echo 'Idempotence test: pass' && exit 0) \
     || (echo 'Idempotence test: fail' && exit 1)
