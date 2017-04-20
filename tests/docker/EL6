@@ -45,39 +45,39 @@ RUN java -version 2>&1 \
     && (echo 'Functional test passed' && exit 0) \
     || (echo 'Functional test failed' && exit 1)
 
-# Set new JAVA Version
-ENV JAVA_MINOR 101
-ENV JAVA "1.$JAVA_MAJOR.0_$JAVA_MINOR"
+# # Set new JAVA Version
+# ENV JAVA_MINOR 101
+# ENV JAVA "1.$JAVA_MAJOR.0_$JAVA_MINOR"
 
-# Run the playbook
-RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=8 javaMinorVersion=101" --connection=local --sudo -v
-# Idempotency check
-RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=8 javaMinorVersion=101" --connection=local --sudo \
-    | grep -q 'changed=0.*failed=0' \
-    && (echo 'Idempotence test: pass' && exit 0) \
-    || (echo 'Idempotence test: fail' && exit 1)
+# # Run the playbook
+# RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=8 javaMinorVersion=101" --connection=local --sudo -v
+# # Idempotency check
+# RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=8 javaMinorVersion=101" --connection=local --sudo \
+#     | grep -q 'changed=0.*failed=0' \
+#     && (echo 'Idempotence test: pass' && exit 0) \
+#     || (echo 'Idempotence test: fail' && exit 1)
 
-# Java version check
-RUN java -version 2>&1 \
-    | grep "$JAVA" \
-    && (echo 'Functional test passed' && exit 0) \
-    || (echo 'Functional test failed' && exit 1)
+# # Java version check
+# RUN java -version 2>&1 \
+#     | grep "$JAVA" \
+#     && (echo 'Functional test passed' && exit 0) \
+#     || (echo 'Functional test failed' && exit 1)
 
-# Set new JAVA Version
-ENV JAVA_MAJOR 7
-ENV JAVA_MINOR 79
-ENV JAVA "1.$JAVA_MAJOR.0_$JAVA_MINOR"
+# # Set new JAVA Version
+# ENV JAVA_MAJOR 7
+# ENV JAVA_MINOR 79
+# ENV JAVA "1.$JAVA_MAJOR.0_$JAVA_MINOR"
 
-# Run the playbook
-RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=7 javaMinorVersion=79" --connection=local --sudo -v
-# Idempotency check
-RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=7 javaMinorVersion=79" --connection=local --sudo \
-    | grep -q 'changed=0.*failed=0' \
-    && (echo 'Idempotence test: pass' && exit 0) \
-    || (echo 'Idempotence test: fail' && exit 1)
+# # Run the playbook
+# RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=7 javaMinorVersion=79" --connection=local --sudo -v
+# # Idempotency check
+# RUN ansible-playbook test.yml -i test.ini --extra-vars "javaMajorVersion=7 javaMinorVersion=79" --connection=local --sudo \
+#     | grep -q 'changed=0.*failed=0' \
+#     && (echo 'Idempotence test: pass' && exit 0) \
+#     || (echo 'Idempotence test: fail' && exit 1)
 
-# Java version check
-RUN java -version 2>&1 \
-    | grep "$JAVA" \
-    && (echo 'Functional test passed' && exit 0) \
-    || (echo 'Functional test failed' && exit 1)
+# # Java version check
+# RUN java -version 2>&1 \
+#     | grep "$JAVA" \
+#     && (echo 'Functional test passed' && exit 0) \
+#     || (echo 'Functional test failed' && exit 1)
