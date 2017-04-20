@@ -11,6 +11,9 @@
       jdkHome: "{{ javaPath }}/jdk{{ jdkVersion }}"
 
 -   include_vars: java-builds.yml
+-   debug: "msg={{ javaBuilds[javaMajorVersion] }}"
+-   debug: "msg={{ javaBuilds[javaMajorVersion][javaMinorVersion] }}"
+-   debug: "msg={{ javaBuilds[javaMajorVersion][javaMinorVersion]['build'] }}"
 
 -   set_fact:
       jdkBuildNumber: "{{ javaBuilds[javaMajorVersion][javaMinorVersion]['build'] }}"
