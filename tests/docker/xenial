@@ -1,7 +1,7 @@
 FROM ubuntu:xenial
 
 RUN apt-get update -qq \
-    && apt-get install -y python-pip python-dev gcc libffi-dev python-dev git curl \
+    && apt-get install -y python-pip python-dev gcc libffi-dev libssl-dev python-dev git curl \
     && pip install --upgrade pip
 
 WORKDIR /tmp
