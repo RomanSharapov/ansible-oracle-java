@@ -41,7 +41,6 @@ sed -ie 's/javaFromOracle: true/javaFromOracle: false/g' ../defaults/main.yml
     http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz \
     > ../files/jdk-8u101-linux-x64.tar.gz
 
-
 # Run the playbook
 ansible-playbook test.yml -i test.ini --connection=local --sudo -v
 # Idempotency check
@@ -71,11 +70,6 @@ sed -ie 's/javaClearAfter: false/javaClearAfter: true/g' ../defaults/main.yml
 
 # Run the playbook
 ansible-playbook test.yml -i test.ini --connection=local --sudo -v
-# Idempotency check
-ansible-playbook test.yml -i test.ini --connection=local --sudo \
-    | grep -q 'changed=0.*failed=0' \
-    && (echo 'Idempotence test: pass' && exit 0) \
-    || (echo 'Idempotence test: fail' && exit 1)
 
 JAVA_MAJOR=7
 JAVA_MINOR=79
