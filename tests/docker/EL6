@@ -17,5 +17,6 @@ ENV ANSIBLE_LIBRARY /tmp/ansible/library
 
 COPY ./test-playbook.sh test-playbook.sh
 
-RUN chmod +x test-playbook.sh \
-    && ./test-playbook.sh
+RUN chmod +x test-playbook.sh
+
+RUN ./test-playbook.sh
