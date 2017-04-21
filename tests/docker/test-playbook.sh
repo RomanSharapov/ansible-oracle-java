@@ -81,5 +81,5 @@ java -version 2>&1 \
     || (echo "Functional test 1 for $JAVA failed" && exit 1)
 # Downloaded files removal check
 [ -f jdk-7u79-linux-x64.tar.gz ] \
-    && (echo "Functional test 2 for $JAVA passed" && exit 1) \
-    || (echo "Functional test 2 for $JAVA failed" && exit 0)
+    && (echo "Functional test 2 for $JAVA failed" && exit 1) \
+    || (echo "Functional test 2 for $JAVA passed" && exit 0)
