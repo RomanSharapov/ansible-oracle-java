@@ -1,8 +1,7 @@
-FROM centos:6
+FROM ubuntu:xenial
 
-RUN yum -y update \
-    && rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
-    && yum install -y python-pip gcc libffi-devel python-devel openssl-devel git curl \
+RUN apt-get update -qq \
+    && apt-get install -y python-pip python-dev gcc libffi-dev libssl-dev python-dev git curl \
     && pip install --upgrade pip
 
 WORKDIR /tmp
