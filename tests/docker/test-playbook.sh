@@ -20,8 +20,8 @@ ansible-playbook test.yml -i test.ini --connection=local --sudo -v
 # Idempotency check
 ansible-playbook test.yml -i test.ini --connection=local --sudo \
     | grep -q 'changed=0.*failed=0' \
-    && (echo 'Idempotence test: pass' && exit 0) \
-    || (echo 'Idempotence test: fail' && exit 1)
+    && (echo "Idempotence test for $JAVA passed" && exit 0) \
+    || (echo "Idempotence test for $JAVA failed" && exit 1)
 
 JAVA_MAJOR=8
 JAVA_MINOR=121
@@ -29,8 +29,8 @@ JAVA="1.$JAVA_MAJOR.0_$JAVA_MINOR"
 # Java version check
 java -version 2>&1 \
     | grep "$JAVA" \
-    && (echo 'Functional test passed' && exit 0) \
-    || (echo 'Functional test failed' && exit 1)
+    && (echo "Functional test for $JAVA passed" && exit 0) \
+    || (echo "Functional test for $JAVA failed" && exit 1)
 
 # Change version
 sed -ie 's/javaMinorVersion: 121/javaMinorVersion: 101/g' ../defaults/main.yml
@@ -46,8 +46,8 @@ ansible-playbook test.yml -i test.ini --connection=local --sudo -v
 # Idempotency check
 ansible-playbook test.yml -i test.ini --connection=local --sudo \
     | grep -q 'changed=0.*failed=0' \
-    && (echo 'Idempotence test: pass' && exit 0) \
-    || (echo 'Idempotence test: fail' && exit 1)
+    && (echo "Idempotence test for $JAVA passed" && exit 0) \
+    || (echo "Idempotence test for $JAVA failed" && exit 1)
 
 JAVA_MAJOR=8
 JAVA_MINOR=101
@@ -55,8 +55,8 @@ JAVA="1.$JAVA_MAJOR.0_$JAVA_MINOR"
 # Java version check
 java -version 2>&1 \
     | grep "$JAVA" \
-    && (echo 'Functional test passed' && exit 0) \
-    || (echo 'Functional test failed' && exit 1)
+    && (echo "Functional test for $JAVA passed" && exit 0) \
+    || (echo "Functional test for $JAVA failed" && exit 1)
 
 # Change version
 sed -ie 's/javaMajorVersion: 8/javaMajorVersion: 7/g' ../defaults/main.yml
@@ -77,9 +77,9 @@ JAVA="1.$JAVA_MAJOR.0_$JAVA_MINOR"
 # Java version check
 java -version 2>&1 \
     | grep "$JAVA" \
-    && (echo 'Functional test 1 passed' && exit 0) \
-    || (echo 'Functional test 1 failed' && exit 1)
+    && (echo "Functional test 1 for $JAVA passed" && exit 0) \
+    || (echo "Functional test 1 for $JAVA failed" && exit 1)
 # Downloaded files removal check
 [ -f jdk-7u79-linux-x64.tar.gz ] \
-    && (echo 'Functional test 2 failed' && exit 1) \
-    || (echo 'Functional test 2 passed' && exit 0)
+    && (echo "Functional test 2 for $JAVA passed" && exit 1) \
+    || (echo "Functional test 2 for $JAVA failed" && exit 0)

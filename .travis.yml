@@ -22,9 +22,15 @@ script:
   # Change workdir to path with dockerfiles
   - cd tests/docker
 
-  # # Test playbook on Centos 6
-  # - docker build -t jdk:EL6 -f EL6 .
-  # # Test playbook on Centos 7
-  # - docker build -t jdk:EL7 -f EL7 .
+  # Test playbook on Centos 6
+  - docker build -t jdk:EL6 -f EL6 .
+  # Test playbook on Centos 7
+  - docker build -t jdk:EL7 -f EL7 .
   # Test playbook on Ubuntu Precise
   - docker build -t jdk:precise -f precise .
+  # Test playbook on Ubuntu Trusty
+  - docker build -t jdk:trusty -f trusty .
+  # Test playbook on Ubuntu Xenial
+  - docker build -t jdk:xenial -f xenial .
+  # Print all images
+  - docker images
