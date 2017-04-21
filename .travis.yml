@@ -3,9 +3,22 @@ language: python
 python: 
   - 3.6
 
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  # Install Ansible.
+  - pip install ansible
+
 services:
   - docker
 
 script:
+  # Check the role/playbook's syntax.
+  - "ansible-playbook -i tests/test.ini tests/test.yml --syntax-check"
+
+  # Change workdir to path with dockerfiles
   - cd tests/docker
+
+  # Test playbook on Centos 6
   - docker build -t jdk:EL6 -f EL6 .
