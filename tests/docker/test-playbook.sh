@@ -32,6 +32,13 @@ java -version 2>&1 \
 
 # Change version
 sed -ie 's/javaMinorVersion: 121/javaMinorVersion: 101/g' ../defaults/main.yml
+# Change variable javaFromOracle
+sed -ie 's/javaFromOracle: true/javaFromOracle: false/g' ../defaults/main.yml
+# Download archive from Oracle site
+ curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" \
+    http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz \
+    > ../files/jdk-8u101-linux-x64.tar.gz
+
 
 # Run the playbook
 ansible-playbook test.yml -i test.ini --connection=local --sudo -v
@@ -53,6 +60,12 @@ java -version 2>&1 \
 # Change version
 sed -ie 's/javaMajorVersion: 8/javaMajorVersion: 7/g' ../defaults/main.yml
 sed -ie 's/javaMinorVersion: 101/javaMinorVersion: 79/g' ../defaults/main.yml
+# Change javaClearAfter value to true
+sed -ie 's/javaClearAfter: false/javaClearAfter: true/g' ../defaults/main.yml
+# Download archive from Oracle site
+ curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" \
+    http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz \
+    > ../files/jdk-7u79-linux-x64.tar.gz
 
 # Run the playbook
 ansible-playbook test.yml -i test.ini --connection=local --sudo -v
@@ -68,5 +81,9 @@ JAVA="1.$JAVA_MAJOR.0_$JAVA_MINOR"
 # Java version check
 java -version 2>&1 \
     | grep "$JAVA" \
-    && (echo 'Functional test passed' && exit 0) \
-    || (echo 'Functional test failed' && exit 1)
+    && (echo 'Functional test 1 passed' && exit 0) \
+    || (echo 'Functional test 1 failed' && exit 1)
+# Downloaded files removal check
+[ -f jdk-7u79-linux-x64.tar.gz ] \
+    && (echo 'Functional test 2 failed' && exit 1) \
+    || (echo 'Functional test 2 passed' && exit 0)
