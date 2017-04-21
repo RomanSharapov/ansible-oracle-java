@@ -1,17 +1,20 @@
 FROM ubuntu:precise
 
 RUN apt-get update -qq \
-    && apt-get install -y python-pip git curl \
-    && pip install --upgrade pip
+    && apt-get install -y python-pip git curl 
+    # \
+    # && pip3 install --upgrade pip
 
-WORKDIR /tmp
+RUN ls /usr/bin | grep pip
 
-ENV PATH /tmp/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin
-ENV PYTHONPATH /tmp/ansible/lib
-ENV ANSIBLE_LIBRARY /tmp/ansible/library
+# WORKDIR /tmp
 
-COPY ./test-playbook.sh test-playbook.sh
+# ENV PATH /tmp/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin
+# ENV PYTHONPATH /tmp/ansible/lib
+# ENV ANSIBLE_LIBRARY /tmp/ansible/library
 
-RUN chmod +x test-playbook.sh
+# COPY ./test-playbook.sh test-playbook.sh
 
-RUN ./test-playbook.sh
+# RUN chmod +x test-playbook.sh
+
+# RUN ./test-playbook.sh
