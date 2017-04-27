@@ -20,7 +20,7 @@ There are the following variables by default:
 # Java major version 7 or 8
 javaMajorVersion: 8
 # Java minor version
-javaMinorVersion: 121
+javaMinorVersion: 131
 
 # Parent path to install JDK
 javaPath: /opt/java/
