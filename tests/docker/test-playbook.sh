@@ -38,8 +38,8 @@ sed -ie 's/javaMinorVersion: 152/javaMinorVersion: 102/g' ../defaults/main.yml
 sed -ie 's/javaFromOracle: true/javaFromOracle: false/g' ../defaults/main.yml
 # Download archive from Oracle site
  curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" \
-    http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz \
-    > ../files/jdk-8u101-linux-x64.tar.gz
+    http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz \
+    > ../files/jdk-8u102-linux-x64.tar.gz
 
 # Run the playbook
 ansible-playbook test.yml -i test.ini --connection=local --sudo -v
