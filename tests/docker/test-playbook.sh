@@ -24,7 +24,7 @@ ansible-playbook test.yml -i test.ini --connection=local --sudo \
     || (echo "Idempotence test for $JAVA failed" && exit 1)
 
 JAVA_MAJOR=8
-JAVA_MINOR=131
+JAVA_MINOR=152
 JAVA="1.$JAVA_MAJOR.0_$JAVA_MINOR"
 # Java version check
 java -version 2>&1 \
@@ -33,7 +33,7 @@ java -version 2>&1 \
     || (echo "Functional test for $JAVA failed" && exit 1)
 
 # Change version
-sed -ie 's/javaMinorVersion: 131/javaMinorVersion: 101/g' ../defaults/main.yml
+sed -ie 's/javaMinorVersion: 152/javaMinorVersion: 102/g' ../defaults/main.yml
 # Change variable javaFromOracle
 sed -ie 's/javaFromOracle: true/javaFromOracle: false/g' ../defaults/main.yml
 # Download archive from Oracle site
@@ -50,7 +50,7 @@ ansible-playbook test.yml -i test.ini --connection=local --sudo \
     || (echo "Idempotence test for $JAVA failed" && exit 1)
 
 JAVA_MAJOR=8
-JAVA_MINOR=101
+JAVA_MINOR=102
 JAVA="1.$JAVA_MAJOR.0_$JAVA_MINOR"
 # Java version check
 java -version 2>&1 \

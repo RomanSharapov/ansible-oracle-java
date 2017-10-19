@@ -20,7 +20,7 @@ There are the following variables by default:
 # Java major version 7 or 8
 javaMajorVersion: 8
 # Java minor version
-javaMinorVersion: 131
+javaMinorVersion: 152
 
 # Parent path to install JDK
 javaPath: /opt/java/
@@ -63,7 +63,7 @@ Simple example:
 
   vars:
     javaMajorVersion: 8
-    javaMinorVersion: 112
+    javaMinorVersion: 132
 ```
 
 ### Step 3: add jdk role in your inventory file
@@ -74,4 +74,5 @@ Simple example:
 
 [jdk]
 your_host
+
 ```
