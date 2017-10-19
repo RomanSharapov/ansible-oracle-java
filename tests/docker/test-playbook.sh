@@ -11,7 +11,7 @@ git submodule update --init --recursive
 
 mkdir -p roles
 cd roles
-git clone https://github.com/DovnarAlexander/ansible-oracle-java.git
+git clone --branch $GIT_BRANCH https://github.com/DovnarAlexander/ansible-oracle-java.git
 
 cd ansible-oracle-java/tests
 
