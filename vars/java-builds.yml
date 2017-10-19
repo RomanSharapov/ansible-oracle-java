@@ -3,6 +3,18 @@
 
 javaBuilds:
   8:
+    152:
+      build: 12
+      downloadId: 'e758a0de34e24606bca991d704f6dcbf'
+    151:
+      build: 16
+      downloadId: 'aa0333dd3019491ca4f6ddbe78cdb6d0'
+    144:
+      build: 01
+      downloadId: '090f390dda5b47b9b721c7dfaa008135'
+    141:
+      build: 15
+      downloadId: '336fa29ff2bb4ef291e347e091f7f4a7'
     131:
       build: 11
       downloadId: 'd54c1d3a095b4ff2b6607d096fa80163'
