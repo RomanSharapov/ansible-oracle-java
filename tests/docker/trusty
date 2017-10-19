@@ -1,7 +1,8 @@
 FROM ubuntu:trusty
 
 RUN apt-get update -qq \
-    && apt-get install -y python-pip python-dev gcc libffi-dev libssl-dev python-dev git curl tar unzip \
+    && apt-get install -y python-setuptools python-dev gcc libffi-dev libssl-dev python-dev git curl tar unzip \
+    && easy_install pip \
     && pip install --upgrade pip
 
 WORKDIR /tmp
