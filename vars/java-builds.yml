@@ -1,14 +1,13 @@
 ---
 # file: vars/java-builds.yml
-
 javaBuilds:
   8:
     152:
-      build: 12
-      downloadId: 'e758a0de34e24606bca991d704f6dcbf'
-    151:
       build: 16
       downloadId: 'aa0333dd3019491ca4f6ddbe78cdb6d0'
+    151:
+      build: 12
+      downloadId: 'e758a0de34e24606bca991d704f6dcbf'
     144:
       build: 01
       downloadId: '090f390dda5b47b9b721c7dfaa008135'
