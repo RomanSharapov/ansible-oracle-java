@@ -3,6 +3,7 @@ FROM centos:7
 RUN yum -y update \
     && rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm \
     && yum install -y python-pip gcc libffi-devel python-devel openssl-devel git curl tar unzip \
+    && ln -s /bin/tar /bin/gtar \
     && pip install --upgrade pip
 
 WORKDIR /tmp
