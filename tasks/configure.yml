@@ -17,5 +17,5 @@
       dest: /etc/environment 
       state: present
       regexp: '^JAVA_HOME'
-      line: "JAVA_HOME={{ jdkHome }}/bin"
+      line: "JAVA_HOME={{ jdkHome }}"
     when: javaSetHome and not jdkCheck.jdkHomeFound
