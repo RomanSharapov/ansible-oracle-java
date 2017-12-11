@@ -1,43 +1,37 @@
 ---
 # file: tasks/prepare.yml
 
--   name: check if java with this version is already installed
-    include: check-java.yml
+- name: Check if Required Version has already installed
+  shell: 'java -version'
+  register: shellResult
+  changed_when: false
+  ignore_errors: yes
+  tags:
+    - skip_ansible_lint
 
-- block:
+- name: Set jdkVersionFound to True
+  set_fact:
+    jdkVersionFound: true
+  when: shellResult.stdout.find(jdkVersion) != -1
 
-  -   name: ensure that all required packages are installed
-      yum: 
-        name: '{{ item }}'
-        state: latest
-        update_cache: yes
-      with_items:
-        - tar
-        - libselinux-python
-      when: ansible_distribution == 'CentOS'
+- name: ensure that all required packages are installed
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items: '{{ packages }}'
 
-  -   name: ensure that required packages are installed
-      apt: 
-        name: '{{ item }}'
-        state: latest
-      with_items:
-        - tar
-      when: ansible_distribution == 'Ubuntu'
+- name: prepare path for downloaded archive
+  file:
+    path: "{{ javaDownloadPath }}"
+    state: directory
 
-  -   name: prepare path for downloaded archive
-      file:
-        path: "{{ javaDownloadPath }}"
-        state: directory
+- name: prepare home path for JDK
+  file:
+    path: "{{ javaPath }}"
+    recurse: yes
+    state: directory
 
-  -   name: prepare home path for JDK
-      file:
-        path: "{{ javaPath }}"
-        recurse: yes
-        state: directory
-
-  -   name: check permissions for home JDK path
-      file:
-        path: "{{ javaPath }}"
-        mode: 0755
-
-  when: not jdkCheck.jdkVersionFound
+- name: check permissions for home JDK path
+  file:
+    path: "{{ javaPath }}"
+    mode: 0755
