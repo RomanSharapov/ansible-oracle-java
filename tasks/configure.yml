@@ -1,21 +1,30 @@
 ---
 # file: tasks/configure.yml
 
--   name: ensure that java installed via alternatives
-    alternatives:
-      name: java
-      link: /usr/bin/java
-      path: '{{ jdkHome }}/bin/java'
-        
--   name: ensure that correct java version is selected
-    alternatives:
-      name: java
-      path: '{{ jdkHome }}/bin/java'
+- name: ensure that java installed via alternatives
+  alternatives:
+    name: java
+    link: /usr/bin/java
+    path: '{{ jdkHome }}/bin/java'
 
--   name: Set JAVA_HOME
-    lineinfile: 
-      dest: /etc/environment 
-      state: present
-      regexp: '^JAVA_HOME'
-      line: "JAVA_HOME={{ jdkHome }}"
-    when: javaSetHome and not jdkCheck.jdkHomeFound
+- name: ensure that correct java version is selected
+  alternatives:
+    name: java
+    path: '{{ jdkHome }}/bin/java'
+
+- name: ensure /etc/profile.d/vars.sh file is present
+  file:
+    name: /etc/profile.d/vars.sh
+    state: touch
+    owner: root
+    group: root
+    mode: 0644
+  changed_when: False
+
+- name: Set JAVA_HOME
+  lineinfile:
+    dest: /etc/profile.d/vars.sh
+    state: present
+    regexp: '^export JAVA_HOME'
+    line: "export JAVA_HOME='{{ jdkHome }}'"
+  when: javaSetHome
