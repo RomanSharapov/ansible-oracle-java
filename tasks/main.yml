@@ -1,19 +1,18 @@
 ---
 # file: tasks/main.yml
 
-# Include task to check all required variables
--   include: check-vars.yml
+- name: Check all required variables
+  import_tasks: check-vars.yml
 
-# Set all required variables for tasks
--   include: set-facts.yml
+- name: Set all required facts
+  import_tasks: set-facts.yml
 
-# Prepare instance
--   include: prepare.yml
+- name: Prepare instance to provisioning
+  import_tasks: prepare.yml
 
-# Install JDK
--   include: install.yml
-    when: not jdkCheck.jdkVersionFound
+- name: Install Oracle Jdk
+  include_tasks: install.yml
+  when: not jdkVersionFound
 
-# Configure JDK
--   include: configure.yml
-    when: not jdkCheck.jdkHomeFound or javaSetHome
+- name: Configure Oracle Jdk
+  import_tasks: configure.yml

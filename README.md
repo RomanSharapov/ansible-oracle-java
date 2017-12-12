@@ -3,14 +3,18 @@ Role Name
 
 Role name in Ansible Galaxy: **[DovnarAlexander/oracle-java](https://galaxy.ansible.com/DovnarAlexander/oracle-java)**
 
-You can use this role to install JDK 7 or 8 version.
+You can use this role to install JDK 8u151 + .
 This role could be used on any distributive with YUM or APT package manager.
 
 Role Variables
 --------------
 ### Mandatory variables
 
-None.
+```yaml
+# If you need to install old version of JDK (less then 8u151), you need specify valid Oracle ID credentials.
+oracleIDUsername: user
+oracleIDPassword: password
+```
 
 ### Optional variables
 
@@ -62,8 +66,8 @@ Simple example:
     - DovnarAlexander.oracle-java
 
   vars:
-    javaMajorVersion: 8
-    javaMinorVersion: 132
+    javaMajorVersion: 9
+    javaMinorVersion: 1
 ```
 
 ### Step 3: add jdk role in your inventory file

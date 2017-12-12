@@ -1,0 +1,9 @@
+---
+- hosts: test
+  become: true
+  remote_user: root
+  roles:
+    - ansible-oracle-java
+  vars:
+    javaMajorVersion: "{{ lookup('env','java_major') }}"
+    javaMinorVersion: "{{ lookup('env','java_minor') }}"
