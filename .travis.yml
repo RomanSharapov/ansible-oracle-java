@@ -8,23 +8,23 @@ env:
   - distribution: centos
     version: 7
     java_major: 9
-    java_minor: 1
+    java_minor: 4
   - distribution: centos
     version: 6
     java_major: 8
-    java_minor: 152
+    java_minor: 162
   - distribution: ubuntu
-    version: zesty
+    version: artful
     java_major: 9
-    java_minor: 1
+    java_minor: 4
   - distribution: ubuntu
     version: trusty
     java_major: 8
-    java_minor: 151
+    java_minor: 162
   - distribution: ubuntu
     version: xenial
     java_major: 8
-    java_minor: 152
+    java_minor: 161
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y python-pip libssl-dev

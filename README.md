@@ -3,7 +3,7 @@ Role Name
 
 Role name in Ansible Galaxy: **[DovnarAlexander/oracle-java](https://galaxy.ansible.com/DovnarAlexander/oracle-java)**
 
-You can use this role to install JDK 8u151 + .
+You can use this role to install any version of JDK from Oracle Site + .
 This role could be used on any distributive with YUM or APT package manager.
 
 Role Variables
@@ -21,10 +21,10 @@ oracleIDPassword: password
 There are the following variables by default:
 
 ```yaml
-# Java major version 7 or 8
+# Java major version 7, 8 or 9
 javaMajorVersion: 8
 # Java minor version
-javaMinorVersion: 152
+javaMinorVersion: 162
 
 # Parent path to install JDK
 javaPath: /opt/java/

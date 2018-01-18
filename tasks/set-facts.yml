@@ -26,20 +26,31 @@
     set_fact:
       jarTarLinkID: "{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['downloadId'] }}/"
     when: "javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['downloadId'] is defined"
-  - name: Update Oracle rep location of JDK <8.151
+  - name: Update Oracle rep location of JDK <8.152
     set_fact:
       oracleRep: 'otn'
       oracleAuth: true
-    when: javaMinorVersion|int < 151
+    when: javaMinorVersion|int <= 152
   when: javaMajorVersion|int == 7 or javaMajorVersion|int == 8
 
-- name: Version dependend variables setting (9th version)
-  set_fact:
-    jdkHome: "{{ javaPath }}/jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}"
-    jdkVersion: "jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}"
-    jdkTarPath: "{{ javaMajorVersion }}.0.{{ javaMinorVersion }}+{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['build'] }}"
-    jdkTarName: "jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}_linux-{{ jdkOSArch }}_bin.tar.gz"
-    oracleRep: 'otn-pub'
+- block:
+  - name: Version dependend variables setting (9th version)
+    set_fact:
+      jdkHome: "{{ javaPath }}/jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}"
+      jdkVersion: "jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}"
+      jdkTarPath: "{{ javaMajorVersion }}.0.{{ javaMinorVersion }}+{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['build'] }}"
+      jdkTarName: "jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}_linux-{{ jdkOSArch }}_bin.tar.gz"
+      oracleRep: 'otn-pub'
+  - name: Set tar link for downloadID
+    set_fact:
+      jarTarLinkID: "{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['downloadId'] }}/"
+    when: "javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['downloadId'] is defined"
+  - name: Update Oracle rep location of JDK 9.0.1
+    set_fact:
+      oracleRep: 'otn'
+      oracleAuth: true
+      jdkTarPath: "{{ javaMajorVersion }}.0.{{ javaMinorVersion }}+{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['build'] }}"
+    when: javaMinorVersion|int == 1
   when: javaMajorVersion|int == 9
 
 - name: Set final URL for JDK downloading

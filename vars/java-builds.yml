@@ -5,7 +5,16 @@ javaBuilds:
   9:
     1:
       build: 11
+    4:
+      build: 11
+      downloadId: 'c2514751926b4512b076cc82f959763f'
   8:
+    162:
+      build: 12
+      downloadId: '0da788060d494f5095bf8624735fa2f1'
+    161:
+      build: 12
+      downloadId: '2f38c3b165be4555a1fa6e98c45e0808'
     152:
       build: 16
       downloadId: 'aa0333dd3019491ca4f6ddbe78cdb6d0'
