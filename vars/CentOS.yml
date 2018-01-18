@@ -3,4 +3,3 @@
 
 packages:
   - tar
-  - libselinux-python
