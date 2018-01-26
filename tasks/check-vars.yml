@@ -27,6 +27,7 @@
 
 - name: check oracleID Credentials variable for accessing to Oracle OTN
   fail: msg="Specify oracleIDUsername and oracleIDPassword variables"
-  when: (javaMajorVersion|int == 7 or javaMajorVersion|int == 8) and
-        javaMinorVersion|int < 151 and
+  when: javaFromOracle and
+        (javaMajorVersion|int == 7 or javaMajorVersion|int == 8) and
+        javaMinorVersion|int < 152 and
         (oracleIDUsername is not defined and oracleIDPassword is not defined)
