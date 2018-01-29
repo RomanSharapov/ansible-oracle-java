@@ -12,7 +12,8 @@
 - name: Set jdkVersionFound to True
   set_fact:
     jdkVersionFound: true
-  when: shellResult.stdout.find(jdkVersion) != -1
+  when: shellResult.stdout|regex_search(jdkVersion) or
+        shellResult.stderr|regex_search(jdkVersion)
 
 - name: ensure that all required packages are installed
   package:
