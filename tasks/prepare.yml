@@ -1,7 +1,7 @@
 ---
 # file: tasks/prepare.yml
 
-- name: Check if Required Version has already installed
+- name: Check if Required Version has already installed.
   shell: 'java -version'
   register: shellResult
   changed_when: false
@@ -9,30 +9,30 @@
   tags:
     - skip_ansible_lint
 
-- name: Set jdkVersionFound to True
+- name: Set jdkVersionFound to True.
   set_fact:
     jdkVersionFound: true
   when: shellResult.stdout|regex_search(jdkVersion) or
         shellResult.stderr|regex_search(jdkVersion)
 
-- name: ensure that all required packages are installed
+- name: ensure that all required packages are installed.
   package:
     name: '{{ item }}'
     state: present
   with_items: '{{ packages }}'
 
-- name: prepare path for downloaded archive
+- name: prepare path for downloaded archive.
   file:
     path: "{{ javaDownloadPath }}"
     state: directory
 
-- name: prepare home path for JDK
+- name: prepare home path for JDK.
   file:
     path: "{{ javaPath }}"
     recurse: yes
     state: directory
 
-- name: check permissions for home JDK path
+- name: check permissions for home JDK path.
   file:
     path: "{{ javaPath }}"
     mode: 0755

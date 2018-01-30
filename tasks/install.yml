@@ -1,7 +1,7 @@
 ---
 # file: tasks/install.yml
 
-- name: download tar archive from oracle site
+- name: download tar archive from oracle site.
   get_url:
     url: "{{ jarTarURL }}"
     headers: "Cookie:oraclelicense=accept-securebackup-cookie"
@@ -11,7 +11,7 @@
     timeout: 600
   when: javaFromOracle and not oracleAuth
 
-- name: download tar archive from oracle site with Oracle Account ID
+- name: download tar archive from oracle site with Oracle Account ID.
   get_url:
     url: "{{ jarTarURL }}"
     headers: "Cookie:oraclelicense=accept-securebackup-cookie"
@@ -24,20 +24,20 @@
     timeout: 600
   when: javaFromOracle and oracleAuth
 
-- name: copy tar archive from local
+- name: copy tar archive from local.
   copy:
     src: "{{ jdkTarName }}"
     dest: "{{ javaDownloadPath }}/{{ jdkTarName }}"
   when: not javaFromOracle
 
-- name: unarchive tar archive with JDK
+- name: unarchive tar archive with JDK.
   unarchive:
     src: "{{ javaDownloadPath }}/{{ jdkTarName }}"
     dest: "{{ javaPath }}"
     copy: no
     creates: '{{ jdkHome }}/{{ jdkVersion }}'
 
-- name: remove downloaded file
+- name: remove downloaded file.
   file:
     path: "{{ javaDownloadPath }}/{{ jdkTarName }}"
     state: absent
