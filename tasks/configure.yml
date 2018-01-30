@@ -1,18 +1,18 @@
 ---
 # file: tasks/configure.yml
 
-- name: ensure that java installed via alternatives
+- name: ensure that java installed via alternatives.
   alternatives:
     name: java
     link: /usr/bin/java
     path: '{{ jdkHome }}/bin/java'
 
-- name: ensure that correct java version is selected
+- name: ensure that correct java version is selected.
   alternatives:
     name: java
     path: '{{ jdkHome }}/bin/java'
 
-- name: ensure /etc/profile.d/vars.sh file is present
+- name: ensure /etc/profile.d/vars.sh file is present.
   file:
     name: /etc/profile.d/vars.sh
     state: touch
@@ -21,7 +21,7 @@
     mode: 0644
   changed_when: False
 
-- name: Set JAVA_HOME
+- name: Set JAVA_HOME.
   lineinfile:
     dest: /etc/profile.d/vars.sh
     state: present

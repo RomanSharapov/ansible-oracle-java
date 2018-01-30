@@ -1,12 +1,12 @@
 ---
 # file: tasks/set-facts.yml
 
-- name: Include variables with java builds
+- name: Include variables with java builds.
   include_vars: java-builds.yml
-- name: Include OS specific variables
+- name: Include OS specific variables.
   include_vars: '{{ ansible_os_family }}.yml'
 
-- name: Basic variable setting
+- name: Basic variable setting.
   set_fact:
     jdkBuildNumber: "{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['build'] }}"
     jdkOSArch: "{{ 'i586' if ansible_architecture == 'i386' else 'x64' }}"
@@ -15,18 +15,18 @@
     oracleAuth: false
 
 - block:
-  - name: Version dependend variables setting (7th/8th version)
+  - name: Version dependend variables setting (7th/8th version).
     set_fact:
       jdkVersion: "1.{{ javaMajorVersion }}.0_{{ javaMinorVersion }}"
       jdkHome: "{{ javaPath }}/jdk1.{{ javaMajorVersion }}.0_{{ javaMinorVersion }}"
       jdkTarPath: "{{ javaMajorVersion }}u{{ javaMinorVersion }}-b{{ jdkBuildNumber }}"
       jdkTarName: "jdk-{{ javaMajorVersion }}u{{ javaMinorVersion }}-linux-{{ jdkOSArch }}.tar.gz"
       oracleRep: 'otn-pub'
-  - name: Set tar link for downloadID
+  - name: Set tar link for downloadID.
     set_fact:
       jarTarLinkID: "{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['downloadId'] }}/"
     when: "javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['downloadId'] is defined"
-  - name: Update Oracle rep location of JDK <8.152
+  - name: Update Oracle rep location of JDK <8.152.
     set_fact:
       oracleRep: 'otn'
       oracleAuth: true
@@ -34,18 +34,18 @@
   when: javaMajorVersion|int == 7 or javaMajorVersion|int == 8
 
 - block:
-  - name: Version dependend variables setting (9th version)
+  - name: Version dependend variables setting (9th version).
     set_fact:
       jdkHome: "{{ javaPath }}/jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}"
       jdkVersion: "jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}"
       jdkTarPath: "{{ javaMajorVersion }}.0.{{ javaMinorVersion }}+{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['build'] }}"
       jdkTarName: "jdk-{{ javaMajorVersion }}.0.{{ javaMinorVersion }}_linux-{{ jdkOSArch }}_bin.tar.gz"
       oracleRep: 'otn-pub'
-  - name: Set tar link for downloadID
+  - name: Set tar link for downloadID.
     set_fact:
       jarTarLinkID: "{{ javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['downloadId'] }}/"
     when: "javaBuilds[javaMajorVersion|int][javaMinorVersion|int]['downloadId'] is defined"
-  - name: Update Oracle rep location of JDK 9.0.1
+  - name: Update Oracle rep location of JDK 9.0.1.
     set_fact:
       oracleRep: 'otn'
       oracleAuth: true
@@ -53,6 +53,6 @@
     when: javaMinorVersion|int == 1
   when: javaMajorVersion|int == 9
 
-- name: Set final URL for JDK downloading
+- name: Set final URL for JDK downloading.
   set_fact:
     jarTarURL: "http://download.oracle.com/{{ oracleRep }}/java/jdk/{{ jdkTarPath }}/{{ jarTarLinkID }}{{ jdkTarName }}"
