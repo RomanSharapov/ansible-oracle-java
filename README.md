@@ -12,8 +12,8 @@ Role Variables
 
 ```yaml
 # If you need to install old version of JDK (less then 8u151), you need specify valid Oracle ID credentials.
-oracleIDUsername: user
-oracleIDPassword: password
+oracle_id_username: user
+oracle_id_password: password
 ```
 
 ### Optional variables
@@ -21,26 +21,29 @@ oracleIDPassword: password
 There are the following variables by default:
 
 ```yaml
-# Java major version 7, 8 or 9
-javaMajorVersion: 8
+# file: defaults/main.yml
+
+# Java major version 7 or 8
+java_major_version: 8
 # Java minor version
-javaMinorVersion: 162
+java_minor_version: 162
 
 # Parent path to install JDK
-javaPath: /opt/java/
+java_root_path: /opt/java
 
 # Path to download archives with JDK
-javaDownloadPath: /tmp
+java_distr_path: /tmp
 # True if you want to use oracle web site to download archive
 # False if you have already had downloaded tar archive:
-# Just put this file in folder under roles/oracle-java/files folder
+# Just put this file in folder under files folder
 # Name should be in format jdk-<major_version>u<minor_version>-linux-x<64_or_86>.tar.gz
-javaFromOracle: true
-# True if you want to clear download files from javaDownloadPath folder
-javaClearAfter: false
+java_from_oracle: True
+
+# True if you want to clear download files from java_distr_path folder
+java_clear_after: False
 
 # Do you want to set up JAVA_HOME global variable in Linux
-javaSetHome: true
+java_set_home: True
 ```
 
 Example Playbook
@@ -66,17 +69,17 @@ Simple example:
     - DovnarAlexander.oracle-java
 
   vars:
-    javaMajorVersion: 9
-    javaMinorVersion: 1
+    java_major_version: 9
+    java_minor_version: 1
 ```
 
-### Step 3: add jdk role in your inventory file
+### Step 3: add java group in your inventory file
 
 ```ini
 ---
 # file:inventory.ini
 
-[jdk]
+[java]
 your_host
 
 ```

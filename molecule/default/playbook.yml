@@ -5,5 +5,5 @@
   roles:
     - ansible-oracle-java
   vars:
-    javaMajorVersion: "{{ lookup('env','java_major') }}"
-    javaMinorVersion: "{{ lookup('env','java_minor') }}"
+    java_major_version: "{{ lookup('env','java_major') }}"
+    java_minor_version: "{{ lookup('env','java_minor') }}"

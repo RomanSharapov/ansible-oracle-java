@@ -37,5 +37,5 @@ def test_correct_javahome_set(host):
         home = "/opt/java/jdk-%s.0.%s" % (major, minor)
     else:
         home = "/opt/java/jdk1.%s.0_%s" % (major, minor)
-    o = host.run(". /etc/profile.d/vars.sh && echo $JAVA_HOME")
+    o = host.run(". /etc/environment && echo $JAVA_HOME")
     assert home in o.stdout.split()

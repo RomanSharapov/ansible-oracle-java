@@ -1,44 +1,44 @@
 ---
 # file: tasks/install.yml
 
-- name: download tar archive from oracle site.
+- name: Download TAR archive from oracle site.
   get_url:
-    url: "{{ jarTarURL }}"
+    url: "{{ java_tar_url }}"
     headers: "Cookie:oraclelicense=accept-securebackup-cookie"
-    dest: "{{ javaDownloadPath }}/{{ jdkTarName }}"
+    dest: "{{ java_distr_path }}/{{ java_tar_name }}"
     force: no
     validate_certs: no
     timeout: 600
-  when: javaFromOracle and not oracleAuth
+  when: java_from_oracle and not oracle_auth
 
-- name: download tar archive from oracle site with Oracle Account ID.
+- name: Download TAR archive from oracle site with Oracle Account ID.
   get_url:
-    url: "{{ jarTarURL }}"
+    url: "{{ java_tar_url }}"
     headers: "Cookie:oraclelicense=accept-securebackup-cookie"
-    dest: "{{ javaDownloadPath }}/{{ jdkTarName }}"
+    dest: "{{ java_distr_path }}/{{ java_tar_name }}"
     force: no
     force_basic_auth: yes
-    url_username: '{{ oracleIDUsername }}'
-    url_password: '{{ oracleIDPassword }}'
+    url_username: '{{ oracle_id_username }}'
+    url_password: '{{ oracle_id_password }}'
     validate_certs: no
     timeout: 600
-  when: javaFromOracle and oracleAuth
+  when: java_from_oracle and oracle_auth
 
-- name: copy tar archive from local.
+- name: Copy TAR archive from local.
   copy:
-    src: "{{ jdkTarName }}"
-    dest: "{{ javaDownloadPath }}/{{ jdkTarName }}"
-  when: not javaFromOracle
+    src: "{{ java_tar_name }}"
+    dest: "{{ java_distr_path }}/{{ java_tar_name }}"
+  when: not java_from_oracle
 
-- name: unarchive tar archive with JDK.
+- name: Unarchive TAR archive with JDK.
   unarchive:
-    src: "{{ javaDownloadPath }}/{{ jdkTarName }}"
-    dest: "{{ javaPath }}"
+    src: "{{ java_distr_path }}/{{ java_tar_name }}"
+    dest: "{{ java_root_path }}"
     copy: no
-    creates: '{{ jdkHome }}/{{ jdkVersion }}'
+    creates: '{{ java_home }}'
 
-- name: remove downloaded file.
+- name: Remove downloaded TAR JDK archive.
   file:
-    path: "{{ javaDownloadPath }}/{{ jdkTarName }}"
+    path: "{{ java_distr_path }}/{{ java_tar_name }}"
     state: absent
-  when: javaClearAfter
+  when: java_clear_after

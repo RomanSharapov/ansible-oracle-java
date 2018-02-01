@@ -1,38 +1,38 @@
 ---
 # file: vars/java-builds.yml
 
-javaBuilds:
+java_builds:
   9:
     1:
       build: 11
     4:
       build: 11
-      downloadId: 'c2514751926b4512b076cc82f959763f'
+      download_id: 'c2514751926b4512b076cc82f959763f'
   8:
     162:
       build: 12
-      downloadId: '0da788060d494f5095bf8624735fa2f1'
+      download_id: '0da788060d494f5095bf8624735fa2f1'
     161:
       build: 12
-      downloadId: '2f38c3b165be4555a1fa6e98c45e0808'
+      download_id: '2f38c3b165be4555a1fa6e98c45e0808'
     152:
       build: 16
-      downloadId: 'aa0333dd3019491ca4f6ddbe78cdb6d0'
+      download_id: 'aa0333dd3019491ca4f6ddbe78cdb6d0'
     151:
       build: 12
-      downloadId: 'e758a0de34e24606bca991d704f6dcbf'
+      download_id: 'e758a0de34e24606bca991d704f6dcbf'
     144:
       build: 01
-      downloadId: '090f390dda5b47b9b721c7dfaa008135'
+      download_id: '090f390dda5b47b9b721c7dfaa008135'
     141:
       build: 15
-      downloadId: '336fa29ff2bb4ef291e347e091f7f4a7'
+      download_id: '336fa29ff2bb4ef291e347e091f7f4a7'
     131:
       build: 11
-      downloadId: 'd54c1d3a095b4ff2b6607d096fa80163'
+      download_id: 'd54c1d3a095b4ff2b6607d096fa80163'
     121:
       build: 13
-      downloadId: 'e9e7ea248e2c4826b92b3f075a80e441'
+      download_id: 'e9e7ea248e2c4826b92b3f075a80e441'
     112:
       build: 15
     111:
