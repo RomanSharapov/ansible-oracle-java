@@ -1,9 +1,6 @@
 ---
 # file: tasks/main.yml
 
-- name: Check all required variables.
-  import_tasks: check-vars.yml
-
 - name: Set all required facts.
   import_tasks: set-facts.yml
 

@@ -1,0 +1,91 @@
+---
+
+java_builds:
+  - minor: 172
+    build: 11
+    download_id: 'a58eab1ec242421181065cdc37240b08'
+    storage: 'otn-pub'
+  - minor: 171
+    build: 11
+    download_id: '512cd62ec5174c3487ac17c61aaa89e8'
+    storage: 'otn-pub'
+  - minor: 162
+    build: 12
+    download_id: '0da788060d494f5095bf8624735fa2f1'
+    storage: 'otn'
+  - minor: 161
+    build: 12
+    download_id: '2f38c3b165be4555a1fa6e98c45e0808'
+    storage: 'otn'
+  - minor: 152
+    build: 16
+    download_id: 'aa0333dd3019491ca4f6ddbe78cdb6d0'
+    storage: 'otn'
+  - minor: 151
+    build: 12
+    download_id: 'e758a0de34e24606bca991d704f6dcbf'
+    storage: 'otn'
+  - minor: 144
+    build: 01
+    download_id: '090f390dda5b47b9b721c7dfaa008135'
+    storage: 'otn'
+  - minor: 141
+    build: 15
+    download_id: '336fa29ff2bb4ef291e347e091f7f4a7'
+    storage: 'otn'
+  - minor: 131
+    build: 11
+    download_id: 'd54c1d3a095b4ff2b6607d096fa80163'
+    storage: 'otn'
+  - minor: 121
+    build: 13
+    download_id: 'e9e7ea248e2c4826b92b3f075a80e441'
+    storage: 'otn'
+  - minor: 112
+    build: 15
+    storage: 'otn'
+  - minor: 111
+    build: 14
+    storage: 'otn'
+  - minor: 102
+    build: 14
+    storage: 'otn'
+  - minor: 101
+    build: 13
+    storage: 'otn'
+  - minor: 91
+    build: 14
+    storage: 'otn'
+  - minor: 92
+    build: 14
+    storage: 'otn'
+  - minor: 77
+    build: 03
+    storage: 'otn'
+  - minor: 74
+    build: 02
+    storage: 'otn'
+  - minor: 73
+    build: 02
+    storage: 'otn'
+  - minor: 72
+    build: 15
+    storage: 'otn'
+  - minor: 66
+    build: 17
+    storage: 'otn'
+  - minor: 65
+    build: 17
+    storage: 'otn'
+  - minor: 60
+    build: 27
+    storage: 'otn'
+  - minor: 51
+    build: 16
+    storage: 'otn'
+  - minor: 45
+    build: 14
+    storage: 'otn'
+  - minor: 31
+    build: 13
+    storage: 'otn'

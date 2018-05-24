@@ -9,20 +9,7 @@
     force: no
     validate_certs: no
     timeout: 600
-  when: java_from_oracle and not oracle_auth
-
-- name: Download TAR archive from oracle site with Oracle Account ID.
-  get_url:
-    url: "{{ java_tar_url }}"
-    headers: "Cookie:oraclelicense=accept-securebackup-cookie"
-    dest: "{{ java_distr_path }}/{{ java_tar_name }}"
-    force: no
-    force_basic_auth: yes
-    url_username: '{{ oracle_id_username }}'
-    url_password: '{{ oracle_id_password }}'
-    validate_certs: no
-    timeout: 600
-  when: java_from_oracle and oracle_auth
+  when: java_from_oracle
 
 - name: Copy TAR archive from local.
   copy:

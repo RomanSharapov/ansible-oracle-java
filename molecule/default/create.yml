@@ -15,8 +15,6 @@
         hostname: "{{ item.name }}"
         image: "{{ item.image }}"
         state: started
-        recreate: False
-        log_driver: syslog
         command: "{{ item.command | default('sleep infinity') }}"
         privileged: "{{ item.privileged | default(omit) }}"
         volumes: "{{ item.volumes | default(omit) }}"
