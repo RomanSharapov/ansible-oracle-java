@@ -22,7 +22,7 @@ def test_java_present_in_path(host):
 def test_correct_java_version_installed(host):
     major = os.environ['java_major']
     minor = os.environ['java_minor']
-    if major == '9':
+    if major == '10':
         version = "\"%s.0.%s\"" % (major, minor)
     else:
         version = "\"1.%s.0_%s\"" % (major, minor)
@@ -33,7 +33,7 @@ def test_correct_java_version_installed(host):
 def test_correct_javahome_set(host):
     major = os.environ['java_major']
     minor = os.environ['java_minor']
-    if major == '9':
+    if major == '10':
         home = "/opt/java/jdk-%s.0.%s" % (major, minor)
     else:
         home = "/opt/java/jdk1.%s.0_%s" % (major, minor)
