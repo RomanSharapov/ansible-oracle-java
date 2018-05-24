@@ -10,7 +10,7 @@ lint:
 platforms:
   - name: "java-test-${distribution}-${version}"
     image: "${distribution}:${version}"
-    privileged: 'true'
+    privileged: true
     groups:
       - test
 provisioner:
