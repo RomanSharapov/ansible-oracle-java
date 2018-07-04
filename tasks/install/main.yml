@@ -1,7 +1,20 @@
 ---
 
-- name: Download TAR archive with JDK.
-  include_tasks: '{{ java_install_mode }}'
+- name: Import Oracle install mode tasks.
+  import_tasks: 'oracle.yml'
+  when: java_install_mode == 'oracle'
+
+- name: Import Link install mode tasks.
+  import_tasks: 'link.yml'
+  when: java_install_mode == 'link'
+
+- name: Import Local install mode tasks.
+  import_tasks: 'local.yml'
+  when: java_install_mode == 'local'
+
+- name: Import S3 install mode tasks.
+  import_tasks: 's3.yml'
+  when: java_install_mode == 's3'
 
 - name: Unarchive TAR archive with JDK.
   unarchive:
