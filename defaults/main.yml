@@ -11,7 +11,7 @@ java_root_path: /opt/java
 java_distr_path: /tmp
 
 # Java install mode to select. The following values are possible:
-# - oracle - for installing Tar archive directly from Oracle Site.
+# - oracle - for downloading installation Tar archive directly from Oracle Site.
 # - local - for copying installation tar archive from the host.
 # - link - for downloading Tar archive from some web server.
 # - s3 - for downloading Tar archive from S3 bucket.

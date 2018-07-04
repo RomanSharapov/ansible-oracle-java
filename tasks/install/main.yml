@@ -1,7 +1,7 @@
 ---
 
 - name: Download TAR archive with JDK.
-  import_tasks: '{{ java_install_mode }}'
+  include_tasks: '{{ java_install_mode }}'
 
 - name: Unarchive TAR archive with JDK.
   unarchive:
