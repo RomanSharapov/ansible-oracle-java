@@ -1,7 +1,4 @@
 ---
-# file: vars/java-builds.yml
-
----
 
 java_builds:
   - minor: 80

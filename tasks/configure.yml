@@ -1,5 +1,4 @@
 ---
-# file: tasks/configure.yml
 
 - name: Ensure that java installed via alternatives.
   alternatives:

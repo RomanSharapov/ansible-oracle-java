@@ -1,0 +1,17 @@
+---
+
+- name: Download TAR archive with JDK.
+  import_tasks: '{{ java_install_mode }}'
+
+- name: Unarchive TAR archive with JDK.
+  unarchive:
+    src: "{{ java_distr_path }}/{{ java_tar_name }}"
+    dest: "{{ java_root_path }}"
+    copy: no
+    creates: '{{ java_home }}'
+
+- name: Remove downloaded TAR JDK archive.
+  file:
+    path: "{{ java_distr_path }}/{{ java_tar_name }}"
+    state: absent
+  when: java_clean_up

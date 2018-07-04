@@ -1,0 +1,25 @@
+---
+
+- name: Fail if required info about bucket is missed
+  fail:
+    msg: 'The required info about the bucket ({{ item }}) is absent.'
+  with_items:
+    - '{{ java_install_s3_bucket }}'
+    - '{{ java_install_s3_path }}'
+  when: 'item == ""'
+
+- name: Set all required facts
+  set_fact:
+    java_tar_name: "jdk-{{ java_major_version }}u{{ java_minor_version }}.tar.gz"
+
+- name: Download TAR archive from S3.
+  aws_s3:
+    aws_access_key: '{{ java_install_s3.aws_access_key | default(omit) }}'
+    aws_secret_key: '{{ java_install_s3.aws_secret_key | default(omit) }}'
+    bucket: '{{ java_install_s3_bucket }}'
+    object: '{{ java_install_s3_path }}'
+    dest: '{{ java_distr_path }}/{{ java_tar_name }}'
+    mode: 'get'
+    overwrite: 'different'
+    region: '{{ java_install_s3_region | default(omit) }}'
+    retries: 3

@@ -42,7 +42,7 @@ java_distr_path: /tmp
 java_from_oracle: True
 
 # True if you want to clear download files from java_distr_path folder
-java_clear_after: False
+java_clean_up: False
 
 # Do you want to set up JAVA_HOME global variable in Linux
 java_set_home: True

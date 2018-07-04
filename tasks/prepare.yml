@@ -1,5 +1,4 @@
 ---
-# file: tasks/prepare.yml
 
 - name: Check if Required Version has already installed.
   shell: 'java -version'

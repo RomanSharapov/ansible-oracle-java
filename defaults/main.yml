@@ -5,20 +5,34 @@
 java_major_version: 8
 # Java minor version
 java_minor_version: 172
-
-# Parent path to install JDK
+# Parent path to install JDKs
 java_root_path: /opt/java
-
 # Path to download archives with JDK
 java_distr_path: /tmp
-# True if you want to use oracle web site to download archive
-# False if you have already had downloaded tar archive:
-# Just put this file in folder under files folder
-# Name should be in format jdk-<major_version>u<minor_version>-linux-x<64_or_86>.tar.gz
-java_from_oracle: True
+
+# Java install mode to select. The following values are possible:
+# - oracle - for installing Tar archive directly from Oracle Site.
+# - local - for copying installation tar archive from the host.
+# - link - for downloading Tar archive from some web server.
+# - s3 - for downloading Tar archive from S3 bucket.
+java_install_modes:
+  - oracle
+  - local
+  - link
+  - s3
+# Default is oracle
+java_install_mode: oracle
+
+# File name for local installation mode
+java_install_file: 'jdk-{{ java_major_version }}u{{ java_minor_version }}-linux-x64.tar.gz'
+# Link for link installation mode
+java_install_link: ''
+# S3 Dict for installation s3 mode
+java_install_s3_bucket: ''
+java_install_s3_region: ''
+java_install_s3_path: ''
 
 # True if you want to clear download files from java_distr_path folder
-java_clear_after: False
-
+java_clean_up: False
 # Do you want to set up JAVA_HOME global variable in Linux
 java_set_home: True
