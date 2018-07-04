@@ -3,8 +3,7 @@
 - name: 'Check Mode.'
   fail:
     msg: "This mode is not supported"
-  when:
-    - java_install_mode not in java_install_modes
+  when: not (java_install_mode in java_install_modes)
 
 - name: 'Check Version.'
   fail:
