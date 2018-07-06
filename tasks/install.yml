@@ -1,6 +1,0 @@
----
-
-- name: Copy TAR archive from local.
-  copy:
-    src: "{{ java_tar_name }}"
-    dest: "{{ java_distr_path }}/{{ java_tar_name }}"

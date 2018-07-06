@@ -1,5 +1,4 @@
 ---
-# file: vars/CentOS.yml
 
 packages:
   - tar

@@ -1,20 +1,31 @@
 ---
 
-- name: Ensure that java installed via alternatives.
-  alternatives:
-    name: java
-    link: /usr/bin/java
-    path: '{{ java_home }}/bin/java'
+- block:
 
-- name: Ensure that correct java version is selected.
-  alternatives:
-    name: java
-    path: '{{ java_home }}/bin/java'
+    - name: 'Check permissions.'
+      file:
+        path: '{{ java_home }}'
+        mode: 'u+rwX,g+rX,o+rX'
+        state: 'directory'
+        recurse: true
 
-- name: Set JAVA_HOME.
-  lineinfile:
-    dest: /etc/environment
-    state: present
-    regexp: '^export JAVA_HOME'
-    line: "export JAVA_HOME='{{ java_home }}'"
-  when: java_set_home
+    - name: 'Ensure that java installed via alternatives.'
+      alternatives:
+        name: 'java'
+        link: '/usr/bin/java'
+        path: '{{ java_home }}/bin/java'
+
+    - name: 'Ensure that correct java version is selected.'
+      alternatives:
+        name: 'java'
+        path: '{{ java_home }}/bin/java'
+
+    - name: 'Set JAVA_HOME.'
+      lineinfile:
+        dest: '/etc/environment'
+        state: 'present'
+        regexp: '^JAVA_HOME'
+        line: 'JAVA_HOME="{{ java_home }}"'
+      when: 'java_set_home'
+
+  become: true

@@ -1,18 +1,20 @@
 ---
 
-- name: Fail if link is not provided
+- name: 'Fail if link is not provided'
   fail:
     msg: 'Set java_install_link for link install mode please.'
   when: 'java_install_link == ""'
 
-- name: Set all required facts
-  set_fact:
-    java_tar_name: "jdk-{{ java_major_version }}u{{ java_minor_version }}.tar.gz"
-
-- name: Download TAR archive from direct link.
+- name: 'Download TAR archive from direct link.'
   get_url:
-    url: "{{ java_install_link }}"
-    dest: "{{ java_distr_path }}/{{ java_tar_name }}"
-    force: no
-    validate_certs: no
+    url: '{{ java_install_link }}'
+    dest: '{{ java_distr_path }}/{{ java_tar_name }}'
+    validate_certs: false
+    force: false
     timeout: 600
+  register: 'tar_downloaded'
+  until: '(tar_downloaded | succeeded)'
+  retries: 10
+  delay: 5
+  ignore_errors: true
+  become: true

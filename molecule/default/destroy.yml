@@ -1,15 +1,16 @@
 ---
-- name: Destroy
-  hosts: localhost
-  connection: local
-  gather_facts: False
+
+- name: 'Destroy Docker instances for common role'
+  hosts: 'localhost'
+  connection: 'local'
+  gather_facts: false
   vars:
-    molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
-    molecule_yml: "{{ lookup('file', molecule_file) | molecule_from_yaml }}"
+    molecule_yml: '{{ lookup("file", molecule_file) | from_yaml }}'
+
   tasks:
-    - name: Destroy molecule instance(s)
+
+    - name: 'Destroy molecule instance(s)'
       docker_container:
-        name: "{{ item.name }}"
-        state: absent
-        force_kill: "{{ item.force_kill | default(True) }}"
-      with_items: "{{ molecule_yml.platforms }}"
+        name: '{{ item.name }}'
+        state: 'absent'
+      with_items: '{{ molecule_yml.platforms }}'

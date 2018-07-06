@@ -1,6 +1,6 @@
 ---
 
-- name: Fail if required info about bucket is missed
+- name: 'Fail if required info about bucket is missed'
   fail:
     msg: 'The required info about the bucket ({{ item }}) is absent.'
   with_items:
@@ -8,18 +8,61 @@
     - '{{ java_install_s3_path }}'
   when: 'item == ""'
 
-- name: Set all required facts
-  set_fact:
-    java_tar_name: "jdk-{{ java_major_version }}u{{ java_minor_version }}.tar.gz"
+- block:
 
-- name: Download TAR archive from S3.
-  aws_s3:
-    aws_access_key: '{{ java_install_s3.aws_access_key | default(omit) }}'
-    aws_secret_key: '{{ java_install_s3.aws_secret_key | default(omit) }}'
-    bucket: '{{ java_install_s3_bucket }}'
-    object: '{{ java_install_s3_path }}'
-    dest: '{{ java_distr_path }}/{{ java_tar_name }}'
-    mode: 'get'
-    overwrite: 'different'
-    region: '{{ java_install_s3_region | default(omit) }}'
-    retries: 3
+    - name: 'Check that EPEL release installed'
+      yum:
+        name: 'epel-release'
+        state: 'present'
+      when: 'ansible_os_family == "RedHat"'
+
+    - name: 'Check that Python pip is installed.'
+      package:
+        name: 'python-pip'
+        state: 'present'
+      register: 'python_pip_installed'
+      until: '(python_pip_installed | succeeded)'
+      retries: 5
+      delay: 1
+      ignore_errors: true
+
+    - name: 'Install all required Pip packages'
+      pip:
+        name: '{{ item }}'
+        state: 'present'
+      register: 'pip_installed'
+      until: '(pip_installed | succeeded)'
+      retries: 5
+      delay: 1
+      ignore_errors: true
+      with_items:
+        - 'boto'
+        - 'botocore'
+        - 'boto3'
+
+    - name: 'Download TAR archive from S3 (ENV provided credentials).'
+      aws_s3:
+        bucket: '{{ java_install_s3_bucket }}'
+        object: '{{ java_install_s3_path }}'
+        dest: '{{ java_distr_path }}/{{ java_tar_name }}'
+        mode: 'get'
+        overwrite: false
+        ignore_nonexistent_bucket: true
+      register: 'tar_s3_downloaded'
+      when: 'java_install_s3_aws_access_key == "" or
+             java_install_s3_aws_secret_key == ""'
+
+    - name: 'Download TAR archive from S3 (user provided credentials).'
+      aws_s3:
+        aws_access_key: '{{ java_install_s3_aws_access_key | default(omit) }}'
+        aws_secret_key: '{{ java_install_s3_aws_secret_key | default(omit) }}'
+        bucket: '{{ java_install_s3_bucket }}'
+        object: '{{ java_install_s3_path }}'
+        dest: '{{ java_distr_path }}/{{ java_tar_name }}'
+        mode: 'get'
+        overwrite: false
+        ignore_nonexistent_bucket: true
+        region: '{{ java_install_s3_region | default(omit) }}'
+      when: 'tar_s3_downloaded | skipped'
+
+  become: true

@@ -1,13 +1,7 @@
 ---
 
-- name: Set all required facts
-  set_fact:
-    java_tar_name: '{{ java_install_file }}'
-
-- name: Download TAR archive from host.
+- name: 'Download TAR archive from host.'
   copy:
-    src: "{{ java_install_file }}"
-    dest: "{{ java_distr_path }}/{{ java_tar_name }}"
-    force: no
-    validate_certs: no
-    timeout: 600
+    src: '{{ java_install_file }}'
+    dest: '{{ java_distr_path }}/{{ java_tar_name }}'
+  become: true

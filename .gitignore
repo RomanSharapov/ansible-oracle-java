@@ -1,2 +1,6 @@
-files/*tar.gz
-playbook_test/
+# Ignore local tar archives
+*.tar.gz
+# Ignore retry files
+*.retry
+# Ignore pyc files
+*.pyc

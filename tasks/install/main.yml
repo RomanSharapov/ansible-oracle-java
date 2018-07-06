@@ -1,30 +1,21 @@
 ---
 
-- name: Import Oracle install mode tasks.
-  import_tasks: 'oracle.yml'
-  when: java_install_mode == 'oracle'
+- name: 'Include install mode specific tasks.'
+  include_tasks: '{{ java_install_mode }}.yml'
 
-- name: Import Link install mode tasks.
-  import_tasks: 'link.yml'
-  when: java_install_mode == 'link'
+- block:
 
-- name: Import Local install mode tasks.
-  import_tasks: 'local.yml'
-  when: java_install_mode == 'local'
+    - name: 'Unarchive TAR archive with JDK.'
+      unarchive:
+        src: '{{ java_distr_path }}/{{ java_tar_name }}'
+        dest: '{{ java_root_path }}'
+        remote_src: true
+        creates: '{{ java_home }}'
 
-- name: Import S3 install mode tasks.
-  import_tasks: 's3.yml'
-  when: java_install_mode == 's3'
+    - name: 'Check that archive is absent.'
+      file:
+        path: '{{ java_distr_path }}/{{ java_tar_name }}'
+        state: 'absent'
+      when: 'java_clean_up'
 
-- name: Unarchive TAR archive with JDK.
-  unarchive:
-    src: "{{ java_distr_path }}/{{ java_tar_name }}"
-    dest: "{{ java_root_path }}"
-    copy: no
-    creates: '{{ java_home }}'
-
-- name: Remove downloaded TAR JDK archive.
-  file:
-    path: "{{ java_distr_path }}/{{ java_tar_name }}"
-    state: absent
-  when: java_clean_up
+  become: true
