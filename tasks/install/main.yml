@@ -1,0 +1,21 @@
+---
+
+- name: 'Include install mode specific tasks.'
+  include_tasks: '{{ java_install_mode }}.yml'
+
+- block:
+
+    - name: 'Unarchive TAR archive with JDK.'
+      unarchive:
+        src: '{{ java_distr_path }}/{{ java_tar_name }}'
+        dest: '{{ java_root_path }}'
+        remote_src: true
+        creates: '{{ java_home }}'
+
+    - name: 'Check that archive is absent.'
+      file:
+        path: '{{ java_distr_path }}/{{ java_tar_name }}'
+        state: 'absent'
+      when: 'java_clean_up'
+
+  become: true

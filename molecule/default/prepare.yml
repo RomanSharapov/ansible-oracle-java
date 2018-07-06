@@ -1,9 +1,54 @@
 ---
-- name: Prepare
-  hosts: all
-  gather_facts: False
-  pre_tasks:
-    - name: Install python for Ansible
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-      changed_when: False
-      ignore_errors: yes
+
+- name: 'Prepare Ansible host'
+  hosts: 'localhost'
+  connection: 'local'
+  environment:
+    AWS_ACCESS_KEY_ID: '{{ lookup("env", "AWS_ACCESS_KEY_ID") or None }}'
+    AWS_SECRET_ACCESS_KEY: '{{ lookup("env", "AWS_SECRET_ACCESS_KEY") or None }}'
+    AWS_REGION: '{{ lookup("env", "AWS_REGION") or None }}'
+
+  tasks:
+
+    - name: 'Check local path'
+      file:
+        path: './files'
+        state: 'directory'
+
+    - name: 'Install all required packages'
+      pip:
+        name: '{{ item }}'
+        state: 'present'
+      with_items:
+        - 'boto'
+        - 'botocore'
+        - 'boto3'
+
+    - name: 'Download test distributives from S3.'
+      aws_s3:
+        bucket: '{{ molecule_s3_bucket }}'
+        object: '{{ hostvars[item]["java_install_link"] }}'
+        dest: './files/{{ hostvars[item]["java_install_link"] }}'
+        mode: 'get'
+        overwrite: false
+        ignore_nonexistent_bucket: true
+      with_items:
+        - '{{ groups["java_local"] }}'
+        - '{{ groups["java_link"] }}'
+
+    - name: 'Upload file in file.io'
+      command: '/usr/bin/curl -F "file=@./files/{{ hostvars[item]["java_install_link"] }}" https://file.io'
+      register: 'file_uploaded'
+      until: '(file_uploaded.stdout | regex_search("link"))'
+      retries: 10
+      delay: 5
+      ignore_errors: true
+      with_items: '{{ groups["java_link"] }}'
+      tags:
+        - 'skip_ansible_lint'
+
+    - name: 'Save stdout content.'
+      copy:
+        dest: './files/{{ hostvars[item.1]["java_install_link"] }}.info.tar.gz'
+        content: '{{ file_uploaded["results"][item.0]["stdout"] }}'
+      with_indexed_items: '{{ groups["java_link"] }}'

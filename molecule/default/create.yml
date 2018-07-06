@@ -1,22 +1,38 @@
 ---
-- name: Create
-  hosts: localhost
-  connection: local
-  gather_facts: False
+
+- name: 'Create Docker instances'
+  hosts: 'localhost'
+  connection: 'local'
+  gather_facts: false
   vars:
-    molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
-    molecule_ephemeral_directory: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}"
-    molecule_scenario_directory: "{{ lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}"
-    molecule_yml: "{{ lookup('file', molecule_file) | molecule_from_yaml }}"
+    molecule_ephemeral_directory: '{{ lookup("env", "MOLECULE_EPHEMERAL_DIRECTORY") }}'
+    molecule_instance_config_file: '{{ lookup("env","MOLECULE_INSTANCE_CONFIG") }}'
+    molecule_scenario_directory: '{{ lookup("env", "MOLECULE_SCENARIO_DIRECTORY") }}'
+    molecule_yml: '{{ lookup("file", molecule_file) | from_yaml }}'
+    docker_image: '{{ lookup("env", "DISTRIBUTION") }}:{{ lookup("env", "VERSION") }}'
+
   tasks:
-    - name: Create molecule instance(s)
+
+    - name: 'Create Dockerfiles'
+      template:
+        src: 'Dockerfile.j2'
+        dest: '{{ molecule_ephemeral_directory }}/Dockerfile_{{ docker_image }}'
+
+    - name: 'Build Ansible compatible image'
+      docker_image:
+        path: '{{ molecule_ephemeral_directory }}'
+        name: 'molecule_local/{{ docker_image }}'
+        dockerfile: 'Dockerfile_{{ docker_image }}'
+
+    - name: 'Create molecule instance(s)'
       docker_container:
-        name: "{{ item.name }}"
-        hostname: "{{ item.name }}"
-        image: "{{ item.image }}"
-        state: started
-        command: "{{ item.command | default('sleep infinity') }}"
-        privileged: "{{ item.privileged | default(omit) }}"
-        volumes: "{{ item.volumes | default(omit) }}"
-        capabilities: "{{ item.capabilities | default(omit) }}"
-      with_items: "{{ molecule_yml.platforms }}"
+        name: '{{ item.name }}'
+        hostname: '{{ item.name }}'
+        image: 'molecule_local/{{ docker_image }}'
+        state: 'started'
+        recreate: true
+        command: '{{ item.command | default("sleep infinity") }}'
+        privileged: '{{ item.privileged | default(omit) }}'
+        volumes: '{{ item.volumes | default(omit) }}'
+        capabilities: '{{ item.capabilities | default(omit) }}'
+      with_items: '{{ molecule_yml.platforms }}'

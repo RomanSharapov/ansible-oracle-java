@@ -1,36 +1,77 @@
 ---
-dependency:
-  name: galaxy
+
 driver:
-  name: docker
+  name: 'docker'
 lint:
-  name: yamllint
+  name: 'yamllint'
   options:
-    config-file: molecule/yamllint.yml
+    config-file: 'molecule/yamllint.yml'
 platforms:
-  - name: "java-test-${distribution}-${version}"
-    image: "${distribution}:${version}"
-    privileged: true
+  - name: 'molecule_oracle_01'
     groups:
-      - test
+      - 'java_7'
+      - 'java_7_80'
+      - 'java_local'
+  - name: 'molecule_oracle_02'
+    groups:
+      - 'java_8'
+      - 'java_8_121'
+      - 'java_link'
+  - name: 'molecule_oracle_03'
+    groups:
+      - 'java_8'
+      - 'java_8_172'
+  - name: 'molecule_oracle_04'
+    groups:
+      - 'java_9'
+      - 'java_9_4'
+      - 'java_s3'
+  - name: 'molecule_oracle_05'
+    groups:
+      - 'java_10'
+      - 'java_10_1'
 provisioner:
-  name: ansible
-  lint:
-    name: ansible-lint
-scenario:
-  name: default
-  test_sequence:
-    - lint
-    - dependency
-    - syntax
-    - destroy
-    - create
-    - prepare
-    - converge
-    - verify
-    - idempotence
-    - destroy
+  name: 'ansible'
+  config_options:
+    defaults:
+      timeout: 100
+    ssh_connection:
+      ssh_args: '-o ControlMaster=no'
+  inventory:
+    group_vars:
+      all:
+        molecule_s3_bucket: 'ansible-java-role-molecule'
+      java_local:
+        java_install_mode: local
+        java_install_file: 'jdk-{{ java_major_version }}u{{ java_minor_version }}-linux-x64.tar.gz'
+      java_link:
+        java_install_mode: 'link'
+      java_s3:
+        java_install_mode: 's3'
+        java_install_s3_bucket: '{{ molecule_s3_bucket }}'
+      java_7:
+        java_major_version: 7
+      java_7_80:
+        java_minor_version: 80
+        java_install_link: 'jdk-7u80-linux-x64.tar.gz'
+      java_8:
+        java_major_version: 8
+      java_8_121:
+        java_minor_version: 121
+        java_install_link: 'jdk-8u121-linux-x64.tar.gz'
+      java_8_172:
+        java_minor_version: 172
+      java_9:
+        java_major_version: 9
+      java_9_4:
+        java_minor_version: 4
+        java_install_s3_path: 'jdk-9.0.4_linux-x64_bin.tar.gz'
+      java_10:
+        java_major_version: 10
+      java_10_1:
+        java_minor_version: 1
 verifier:
-  name: testinfra
+  name: 'testinfra'
+  directory: 'tests'
   lint:
-    name: flake8
+    name: 'flake8'

@@ -1,0 +1,51 @@
+---
+
+- name: 'Include Version variables.'
+  include_vars: 'java_{{ java_major_version|string }}.yml'
+
+- name: 'Find all required information about the java version.'
+  set_fact:
+    oracle_java: '{{ item }}'
+  with_items: '{{ java_builds }}'
+  when: 'java_minor_version|int == item.minor'
+
+- name: 'Fail if nothing has been found'
+  fail:
+    msg: 'No information has been found!'
+  when: 'oracle_java is not defined'
+
+- name: 'Set initial variables.'
+  set_fact:
+    oracle_site_base: 'http://download.oracle.com/otn-pub/java/jdk'
+    java_os_arch: '{{ "i586" if ansible_architecture == "i386" else "x64" }}'
+
+- name: 'Set other variables (7 and 8.x)'
+  set_fact:
+    java_tar_path: '{{ java_major_version }}u{{ java_minor_version }}-b{{ oracle_java.build }}'
+    java_tar_name: 'jdk-{{ java_major_version }}u{{ java_minor_version }}-linux-{{ java_os_arch }}.tar.gz'
+  when: 'java_major_version|int == 8'
+
+- name: 'Set other variables (9 and 10.x)'
+  set_fact:
+    java_tar_path: '{{ java_major_version }}.0.{{ java_minor_version }}+{{ oracle_java.build }}'
+    java_tar_name: 'jdk-{{ java_major_version }}.0.{{ java_minor_version }}_linux-{{ java_os_arch }}_bin.tar.gz'
+  when: 'java_major_version|int == 10'
+
+- name: 'Set final URL for JDK downloading'
+  set_fact:
+    java_tar_url: '{{ oracle_site_base }}/{{ java_tar_path }}/{{ oracle_java.download_id }}/{{ java_tar_name }}'
+
+- name: 'Download TAR archive from oracle site.'
+  get_url:
+    url: '{{ java_tar_url }}'
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+    dest: '{{ java_distr_path }}/{{ java_tar_name }}'
+    force: false
+    validate_certs: false
+    timeout: 600
+  register: 'tar_downloaded'
+  until: '(tar_downloaded | succeeded)'
+  retries: 10
+  delay: 5
+  ignore_errors: true
+  become: true

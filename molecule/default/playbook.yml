@@ -1,9 +1,17 @@
 ---
-- hosts: test
-  become: true
-  remote_user: root
+
+# Java Link specific task
+- hosts: 'java_link'
+  tasks:
+    - name: 'Set fact about link.'
+      set_fact:
+        java_install_link: '{{ (lookup("file", java_install_link + ".info.tar.gz") | from_json )["link"] }}'
+
+# Main play
+- hosts: 'all'
+  environment:
+    AWS_ACCESS_KEY_ID: '{{ lookup("env", "AWS_ACCESS_KEY_ID") or None }}'
+    AWS_SECRET_ACCESS_KEY: '{{ lookup("env", "AWS_SECRET_ACCESS_KEY") or None }}'
+    AWS_REGION: '{{ lookup("env", "AWS_REGION") or None }}'
   roles:
-    - ansible-oracle-java
-  vars:
-    java_major_version: "{{ lookup('env','java_major') }}"
-    java_minor_version: "{{ lookup('env','java_minor') }}"
+    - 'ansible-oracle-java'

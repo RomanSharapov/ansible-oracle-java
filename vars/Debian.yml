@@ -1,5 +1,4 @@
 ---
-# file: vars/Ubuntu.yml
 
 packages:
   - tar

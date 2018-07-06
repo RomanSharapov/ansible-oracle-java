@@ -1,53 +1,35 @@
 ---
-# file: tasks/set-facts.yml
 
-- name: 'Check OTN or OTN-PUB storage is required for this version.'
+- name: 'Check Mode.'
   fail:
-    msg: "Downloading from OTN storage currently is not supported"
+    msg: 'This mode is not supported'
+  when: 'not (java_install_mode in java_install_modes)'
+
+- name: 'Check Version.'
+  fail:
+    msg: 'This version is unavailable in oracle OTN PUB repository. Use another mode please.'
   when:
-    - java_from_oracle
-    - java_major_version|int != 10
-    - java_minor_version|int < 171
+    - 'java_install_mode == "oracle"'
+    - '(java_major_version|int == 10 and java_minor_version|int != 1) or
+       (java_major_version|int == 8 and java_minor_version|int < 171) or
+       (java_major_version|int == 7 or java_major_version|int == 9)'
 
-- name: Include all required variables.
-  include_vars: '{{ item }}.yml'
-  with_items:
-    - 'java_{{ java_major_version|string }}'
-    - '{{ ansible_os_family }}'
+- name: 'Include OS Specific variables.'
+  include_vars: '{{ ansible_os_family }}.yml'
 
-- name: Find all required information about the java version.
+- name: 'Set initial variables.'
   set_fact:
-    oracle_java: '{{ item }}'
-  with_items: '{{ java_builds }}'
-  when: 'java_minor_version|int == item.minor'
-
-- name: Fail if nothing has been found
-  fail:
-    msg: 'No information has been found!'
-  when: 'oracle_java is not defined'
-
-- name: Set initial variables.
-  set_fact:
-    oracle_site_base: 'http://download.oracle.com/{{ oracle_java.storage }}/java/jdk'
-    java_os_arch: "{{ 'i586' if ansible_architecture == 'i386' else 'x64' }}"
     java_version_found: false
+    java_tar_name: 'jdk-{{ java_major_version }}u{{ java_minor_version }}.tar.gz'
 
-- name: Set other variables (8.x)
+- name: 'Set other variables (before 9.x)'
   set_fact:
-    java_version: "1.{{ java_major_version }}.0_{{ java_minor_version }}"
-    java_home: "{{ java_home | default ( java_root_path + '/jdk1.' + java_major_version|string + '.0_' + java_minor_version|string ) }}"
-    java_tar_path: "{{ java_major_version }}u{{ java_minor_version }}-b{{ oracle_java.build }}"
-    java_tar_name: "jdk-{{ java_major_version }}u{{ java_minor_version }}-linux-{{ java_os_arch }}.tar.gz"
-  when: java_major_version|int == 8
+    java_version: '1.{{ java_major_version }}.0_{{ java_minor_version }}'
+    java_home: '{{ java_home | default ( java_root_path + "/jdk1." + java_major_version|string + ".0_" + java_minor_version|string ) }}'
+  when: 'java_major_version|int == 7 or java_major_version|int == 8'
 
-- name: Set other variables (10.x)
+- name: 'Set other variables (after 9.x)'
   set_fact:
-    java_version: "jdk-{{ java_major_version }}.0.{{ java_minor_version }}"
-    java_home: "{{ java_home | default ( java_root_path + '/jdk-' + java_major_version|string + '.0.' + java_minor_version|string ) }}"
-    java_tar_path: "{{ java_major_version }}.0.{{ java_minor_version }}+{{ oracle_java.build }}"
-    java_tar_name: "jdk-{{ java_major_version }}.0.{{ java_minor_version }}_linux-{{ java_os_arch }}_bin.tar.gz"
-  when: java_major_version|int == 10
-
-- name: Set final URL for JDK downloading
-  set_fact:
-    java_tar_url: "{{ oracle_site_base }}/{{ java_tar_path }}/{{ oracle_java.download_id }}/{{ java_tar_name }}"
+    java_version: 'jdk-{{ java_major_version }}.0.{{ java_minor_version }}'
+    java_home: '{{ java_home | default ( java_root_path + "/jdk-" + java_major_version|string + ".0." + java_minor_version|string ) }}'
+  when: 'java_major_version|int == 9 or java_major_version|int == 10'
