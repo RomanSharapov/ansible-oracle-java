@@ -4,17 +4,17 @@ language: python
 python: "2.7"
 services:
   - docker
-env:
-  - DISTRIBUTION: centos
-    VERSION: 7
-  - DISTRIBUTION: centos
-    VERSION: 6
-  - DISTRIBUTION: ubuntu
-    VERSION: artful
-  - DISTRIBUTION: ubuntu
-    VERSION: trusty
-  - DISTRIBUTION: ubuntu
-    VERSION: xenial
+# env:
+#   - DISTRIBUTION: centos
+#     VERSION: 7
+#   - DISTRIBUTION: centos
+#     VERSION: 6
+#   - DISTRIBUTION: ubuntu
+#     VERSION: artful
+#   - DISTRIBUTION: ubuntu
+#     VERSION: trusty
+#   - DISTRIBUTION: ubuntu
+#     VERSION: xenial
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y python-pip libssl-dev
@@ -28,4 +28,8 @@ install:
   - py.test --version
 
 script:
-  - molecule test
+  # - molecule test
+  - echo yo
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
